@@ -1,0 +1,18 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:js-lib",
+		":semanticCommits",
+		":timezone(Europe/Prague)",
+		"schedule:earlyMondays",
+		":disableRateLimiting",
+		":label(dependencies)",
+		":separateMultipleMajorReleases",
+		"npm:unpublishSafe",
+		"group:allNonMajor",
+		"group:definitelyTyped",
+		"group:jsTestMonMajor",
+		"group:linters"
+	],
+	"platformCommit": true
+}
