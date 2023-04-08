@@ -20,9 +20,10 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		// Modules
+		"target": "ES2022",
 		"lib": ["ES2022"],
 		"module": "Node16",
-		"target": "ES2022",
+		"moduleResolution": "node16",
 		// Extra types
 		"types": ["vitest/globals"],
 		// Other
