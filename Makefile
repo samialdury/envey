@@ -1,4 +1,4 @@
-PROJECT_NAME	:= create-npm-library
+PROJECT_NAME	:= envey
 
 NPM_BIN				:= ./node_modules/.bin
 
