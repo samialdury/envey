@@ -30,6 +30,7 @@ build: ## build TS
 
 .PHONY: bundle
 bundle: ## bundle
+	rm -rf ./dist
 	$(TSUP) src/index.ts --format cjs,esm --dts
 
 ##@ Versioning
