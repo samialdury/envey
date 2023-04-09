@@ -47,12 +47,3 @@ export function createConfig<S extends EnveySchema>(
 
 	return values as EnveySchemaToConfig<S>
 }
-
-// const schema = {
-// 	nodeEnv: {
-// 		env: 'NODE_ENV',
-// 		format: z.enum(['production', 'test', 'development']).default('production'),
-// 	},
-// } satisfies EnveySchema
-
-// type ConfigType = InferEnveyConfig<typeof schema>

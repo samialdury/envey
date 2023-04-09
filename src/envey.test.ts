@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { createConfig } from './envey.js'
 import { EnveyValidationError } from './errors.js'
+import type { EnveySchema, InferEnveyConfig } from './types.js'
 
 describe('Envey', () => {
 	describe('createConfig', () => {
@@ -124,6 +125,29 @@ describe('Envey', () => {
 						expect.fail('Error is not an instance of EnveyValidationError')
 					}
 				}
+			})
+		})
+
+		describe('Types', () => {
+			it('Should infer type of schema', () => {
+				const schema = {
+					nodeEnv: {
+						env: 'NODE_ENV',
+						format: z
+							.enum(['production', 'test', 'development'])
+							.default('production'),
+					},
+				} satisfies EnveySchema
+
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				let config: InferEnveyConfig<typeof schema>
+
+				// @ts-expect-error - just for testing
+				expectTypeOf(config).toEqualTypeOf<
+					Readonly<{
+						nodeEnv: 'production' | 'test' | 'development'
+					}>
+				>()
 			})
 		})
 	})

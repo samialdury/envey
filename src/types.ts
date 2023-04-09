@@ -10,7 +10,7 @@ export type EnveySchema = Record<string, EnveyField<unknown>>
 export interface EnveyOptions {
 	/**
 	 * Whether to validate the config or not.
-	 * Throws an {@link EnveyValidationError} if validation fails.
+	 * Throws {@link EnveyValidationError} if validation fails.
 	 *
 	 * Defaults to
 	 * `true`

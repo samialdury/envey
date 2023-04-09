@@ -1,6 +1,17 @@
 {
 	"name": "envey",
+	"description": "Type-safe configuration schemas for Node.js",
 	"version": "0.0.1",
+	"author": "Sami Al-Dury",
+	"license": "MIT",
+	"homepage": "https://github.com/samialdury/envey#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/samialdury/envey.git"
+	},
+	"bugs": {
+		"url": "https://github.com/samialdury/envey/issues"
+	},
 	"type": "module",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
@@ -43,5 +54,16 @@
 		"typescript": "^5.0.2",
 		"vitest": "^0.29.7",
 		"zod": "^3.21.4"
-	}
+	},
+	"keywords": [
+		"configuration",
+		"config",
+		"schema",
+		"validation",
+		"zod",
+		"env",
+		"environment",
+		"node",
+		"nodejs"
+	]
 }
