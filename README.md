@@ -1,38 +1,65 @@
-# Create NPM Library
+# Envey
 
-[![Latest release](https://badgen.net/github/release/samialdury/create-npm-library)](https://github.com/samialdury/create-npm-library/releases/latest)
-[![Latest tag](https://badgen.net/github/tag/samialdury/create-npm-library)](https://github.com/samialdury/create-npm-library/tags)
-[![License](https://badgen.net/github/license/samialdury/create-npm-library)](LICENSE)
-[![CI status](https://github.com/samialdury/create-npm-library/actions/workflows/ci.yaml/badge.svg)](https://github.com/samialdury/create-npm-library/actions/workflows/ci.yaml)
+[![Latest release](https://badgen.net/github/release/samialdury/envey)](https://github.com/samialdury/envey/releases/latest)
+[![Latest tag](https://badgen.net/github/tag/samialdury/envey)](https://github.com/samialdury/envey/tags)
+[![License](https://badgen.net/github/license/samialdury/envey)](LICENSE)
+[![CI status](https://github.com/samialdury/envey/actions/workflows/ci.yaml/badge.svg)](https://github.com/samialdury/envey/actions/workflows/ci.yaml)
 
-This is a template repository for setting up new NPM library based on my personal preference.
+Envey is a library designed to simplify the process of managing and validating environment variables in Node.js applications. It provides a fully type-safe solution for defining and parsing configuration schemas, leveraging the power of [Zod's](https://zod.dev/) excellent type system.
 
-Ships with typings and supports CJS & ESM.
-
-## Quick start
-
-The easiest way to get started is either by [creating a new Github repository from this template](https://github.com/samialdury/create-npm-library/generate) or cloning it with [tiged](https://github.com/tiged/tiged):
+## Usage
 
 ```sh
-pnpm dlx tiged github:samialdury/create-npm-library my-library
+pnpm i zod envey
+```
 
-cd my-library
-git init
-make install
+```ts
+import { z } from 'zod'
+import { createConfig } from 'envey'
 
-make help
+const config = createConfig({
+  z,
+  {
+    nodeEnv: {
+      env: 'NODE_ENV',
+      format: z
+        .enum(['production', 'development', 'test'])
+        .default('production'),
+    },
+    port: {
+      env: 'PORT',
+      format: z.coerce.number().positive().default(8000),
+    },
+  },
+  { validate: true }
+})
+// ^? {
+//      readonly nodeEnv: "production" | "development" | "test";
+//      readonly port: number;
+//    }
+```
+
+Supports schema type inference, similar to Zod's [infer](https://zod.dev/?id=type-inference):
+
+```ts
+const schema = {
+  nodeEnv: {
+    env: 'NODE_ENV',
+    format: z
+      .enum(['production', 'test', 'development'])
+      .default('production'),
+  },
+} satisfies EnveySchema
+
+type Config = InferEnveyConfig<typeof schema>
+//   ^? {
+//        readonly nodeEnv: "production" | "development" | "test";
+//      }
 ```
 
 ## Stack
 
-- [Node.js](https://github.com/nodejs/node) & [Typescript](https://github.com/microsoft/TypeScript) (ESM)
-- [tsup](https://github.com/egoist/tsup) for bundling
-- [pnpm](https://github.com/pnpm/pnpm) package manager
-- [Vitest](https://github.com/vitest-dev/vitest) for testing (coverage via [c8](https://github.com/bcoe/c8))
-- [Prettier](https://github.com/prettier/prettier) formatter
-- [ESLint](https://github.com/eslint/eslint) linter
-- [Husky](https://github.com/typicode/husky) Git hooks
-- [Changesets](https://github.com/changesets/changesets) for versioning
+This project has been scaffolded with [create-npm-library](https://github.com/samialdury/create-npm-library).
 
 ## License
 
