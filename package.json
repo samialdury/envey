@@ -1,7 +1,7 @@
 {
 	"name": "envey",
 	"description": "Fully type-safe configuration schemas for Node.js",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"author": "Sami Al-Dury",
 	"license": "MIT",
 	"homepage": "https://github.com/samialdury/envey#readme",
