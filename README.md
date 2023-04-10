@@ -2,6 +2,7 @@
 
 [![Latest release](https://badgen.net/github/release/samialdury/envey)](https://github.com/samialdury/envey/releases/latest)
 [![Latest tag](https://badgen.net/github/tag/samialdury/envey)](https://github.com/samialdury/envey/tags)
+[![npm](https://badgen.net/npm/v/envey)](https://www.npmjs.com/package/envey)
 [![License](https://badgen.net/github/license/samialdury/envey)](LICENSE)
 [![CI status](https://github.com/samialdury/envey/actions/workflows/ci.yaml/badge.svg)](https://github.com/samialdury/envey/actions/workflows/ci.yaml)
 
@@ -28,7 +29,7 @@ const config = createConfig({
     },
     port: {
       env: 'PORT',
-      format: z.coerce.number().positive().default(8000),
+      format: z.coerce.number().int().positive().max(65535),
     },
   },
   { validate: true }
