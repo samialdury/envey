@@ -2,4 +2,4 @@
 "envey": patch
 ---
 
-chore(deps): update linters to v5.58.0
+Update linters to v5.58.0
