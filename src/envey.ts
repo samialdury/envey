@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { EnveyValidationError } from './errors.js'
-import type { EnveyOptions, EnveySchema, EnveySchemaToConfig } from './types.js'
+import type { EnveyOptions, EnveySchema, InferEnveyConfig } from './types.js'
 
 /**
  * Constructs a config object from schema with optional validation.
@@ -18,7 +18,7 @@ export function createConfig<S extends EnveySchema>(
 	zodInstance: typeof z,
 	schema: S,
 	options?: EnveyOptions
-): EnveySchemaToConfig<S> {
+): InferEnveyConfig<S> {
 	const { validate = true } = options ?? {}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,8 +42,8 @@ export function createConfig<S extends EnveySchema>(
 			)
 		}
 
-		return validationResult.data as EnveySchemaToConfig<S>
+		return validationResult.data as InferEnveyConfig<S>
 	}
 
-	return values as EnveySchemaToConfig<S>
+	return values as InferEnveyConfig<S>
 }
