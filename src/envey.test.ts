@@ -26,6 +26,20 @@ describe('Envey', () => {
 			>()
 		})
 
+		it('Should return with possible undefined', () => {
+			const config = createConfig(z, {
+				nodeEnv: {
+					env: 'NODE_ENV',
+					format: z.enum(['production', 'development', 'test']).optional(),
+				},
+			})
+
+			expect(config.nodeEnv).toBe('test')
+			expectTypeOf(config.nodeEnv).toEqualTypeOf<
+				'production' | 'development' | 'test' | undefined
+			>()
+		})
+
 		it('Should leave value as undefined', () => {
 			const config = createConfig(z, {
 				projectName: {
@@ -143,11 +157,34 @@ describe('Envey', () => {
 				let config: InferEnveyConfig<typeof schema>
 
 				// @ts-expect-error - just for testing
-				expectTypeOf(config).toEqualTypeOf<
-					Readonly<{
-						nodeEnv: 'production' | 'test' | 'development'
-					}>
-				>()
+				expectTypeOf(config)
+					// eslint-disable-next-line prettier/prettier
+					.toEqualTypeOf<
+						Readonly<{
+							nodeEnv: 'production' | 'test' | 'development'
+						}>
+					>()
+			})
+
+			it('Should infer with optional with undefined', () => {
+				const schema = {
+					nodeEnv: {
+						env: undefined,
+						format: z.string().optional(),
+					},
+				} satisfies EnveySchema
+
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				let config: InferEnveyConfig<typeof schema>
+
+				// @ts-expect-error - just for testing
+				expectTypeOf(config)
+					// eslint-disable-next-line prettier/prettier
+					.toEqualTypeOf<
+						Readonly<{
+							nodeEnv: string | undefined
+						}>
+					>()
 			})
 		})
 	})
