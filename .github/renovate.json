@@ -11,8 +11,9 @@
 		"npm:unpublishSafe",
 		"group:allNonMajor",
 		"group:definitelyTyped",
-		"group:jsTestMonMajor",
-		"group:linters"
+		"group:jsTestNonMajor",
+		"group:linters",
+		":reviewer(samialdury)"
 	],
 	"platformCommit": true
 }
