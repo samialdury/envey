@@ -1,9 +1,6 @@
 # Envey
 
-[![Latest release](https://badgen.net/github/release/samialdury/envey)](https://github.com/samialdury/envey/releases/latest)
-[![Latest tag](https://badgen.net/github/tag/samialdury/envey)](https://github.com/samialdury/envey/tags)
-[![npm](https://badgen.net/npm/v/envey)](https://www.npmjs.com/package/envey)
-[![License](https://badgen.net/github/license/samialdury/envey)](LICENSE)
+[![NPM version](https://img.shields.io/npm/v/envey)](https://www.npmjs.com/package/envey)
 [![CI status](https://github.com/samialdury/envey/actions/workflows/ci.yaml/badge.svg)](https://github.com/samialdury/envey/actions/workflows/ci.yaml)
 
 Envey is a library designed to simplify the process of managing and validating environment variables in Node.js applications. It provides a fully type-safe solution for defining and parsing configuration schemas, leveraging the power of [Zod's](https://zod.dev/) excellent type system.
@@ -57,10 +54,6 @@ type Config = InferEnveyConfig<typeof schema>
 //        readonly nodeEnv: "production" | "development" | "test";
 //      }
 ```
-
-## Stack
-
-This project has been scaffolded with [create-npm-library](https://github.com/samialdury/create-npm-library).
 
 ## License
 
