@@ -1,6 +1,6 @@
 {
 	"name": "envey",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Type-safe configuration schemas for Node.js",
 	"author": "Sami Al-Dury",
 	"license": "MIT",
