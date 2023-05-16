@@ -1,5 +1,0 @@
----
-"envey": patch
----
-
-Update linters
