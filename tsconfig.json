@@ -14,6 +14,7 @@
         "noUncheckedIndexedAccess": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
+        //
         "verbatimModuleSyntax": true,
         "checkJs": true,
         "esModuleInterop": true,
@@ -24,13 +25,11 @@
         "lib": ["ES2022"],
         "module": "Node16",
         "moduleResolution": "node16",
-        // Extra types
-        "types": ["vitest/globals"],
         // Other
         "noErrorTruncation": true,
         "noEmit": true,
-        "outDir": "./dist"
+        // Extra types
+        "types": ["vitest/globals"]
     },
-    "include": ["./src", "./test"],
-    "exclude": []
+    "include": ["./src", "./test"]
 }

@@ -4,7 +4,7 @@
         "config:js-lib",
         ":semanticCommits",
         ":timezone(Europe/Prague)",
-        "schedule:earlyMondays",
+        "schedule:monthly",
         ":disableRateLimiting",
         ":label(dependencies)",
         ":separateMultipleMajorReleases",

@@ -37,6 +37,9 @@
         "eslint:ci": "eslint --max-warnings 0 .",
         "lint": "pnpm prettier && pnpm eslint",
         "lint:ci": "pnpm prettier:ci && pnpm eslint:ci",
+        "test": "vitest run",
+        "test:watch": "vitest watch",
+        "test:ci": "vitest run --coverage",
         "version": "changeset add",
         "release": "pnpm build && changeset publish"
     },

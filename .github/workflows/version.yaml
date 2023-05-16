@@ -16,28 +16,37 @@ jobs:
     version:
         runs-on: ubuntu-22.04
         if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
-        permissions:
-            id-token: write
-            contents: write
-            packages: write
-            pull-requests: write
-            issues: read
         steps:
             - name: Checkout
               uses: actions/checkout@v3
+              timeout-minutes: 2
+
             - name: Set up pnpm
               uses: pnpm/action-setup@v2
+              timeout-minutes: 2
               with:
                   version: ${{ env.PNPM_VERSION }}
+
             - name: Set up Node.js
               uses: actions/setup-node@v3
+              timeout-minutes: 2
               with:
                   node-version: ${{ env.NODE_VERSION }}
                   cache: pnpm
+
             - name: Install NPM dependencies
-              run: make install-ci
+              timeout-minutes: 2
+              run: |
+                  pnpm install --frozen-lockfile
+
+            - name: Build TypeScript
+              timeout-minutes: 2
+              run: |
+                  pnpm build
+
             - name: Changesets pull request
               uses: changesets/action@v1
+              timeout-minutes: 2
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:

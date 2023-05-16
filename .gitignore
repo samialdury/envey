@@ -1,7 +1,8 @@
 .DS_Store
+.cache
 
 node_modules
-.cache
+build
 dist
 coverage
 
