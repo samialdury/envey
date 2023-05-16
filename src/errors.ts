@@ -1,12 +1,12 @@
 import type { ZodIssue } from 'zod'
 
 export class EnveyValidationError extends Error {
-	public issues: ZodIssue[]
+    public issues: ZodIssue[]
 
-	constructor(issues: ZodIssue[], message: string) {
-		super(message)
+    constructor(issues: ZodIssue[], message: string) {
+        super(message)
 
-		this.name = 'EnveyValidationError'
-		this.issues = issues
-	}
+        this.name = 'EnveyValidationError'
+        this.issues = issues
+    }
 }

@@ -1,36 +1,36 @@
 {
-	"$schema": "https://json.schemastore.org/tsconfig",
-	"compilerOptions": {
-		// Strict settings
-		// Source: https://github.com/tsconfig/bases/blob/main/bases/strictest.json
-		"strict": true,
-		"allowUnusedLabels": false,
-		"allowUnreachableCode": false,
-		"exactOptionalPropertyTypes": true,
-		"noFallthroughCasesInSwitch": true,
-		"noImplicitOverride": true,
-		"noImplicitReturns": true,
-		"noPropertyAccessFromIndexSignature": true,
-		"noUncheckedIndexedAccess": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"verbatimModuleSyntax": true,
-		"checkJs": true,
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		// Modules
-		"target": "ES2022",
-		"lib": ["ES2022"],
-		"module": "Node16",
-		"moduleResolution": "node16",
-		// Extra types
-		"types": ["vitest/globals"],
-		// Other
-		"noErrorTruncation": true,
-		"noEmit": true,
-		"outDir": "./dist"
-	},
-	"include": ["./src", "./test"],
-	"exclude": []
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+        // Strict settings
+        // Source: https://github.com/tsconfig/bases/blob/main/bases/strictest.json
+        "strict": true,
+        "allowUnusedLabels": false,
+        "allowUnreachableCode": false,
+        "exactOptionalPropertyTypes": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "verbatimModuleSyntax": true,
+        "checkJs": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        // Modules
+        "target": "ES2022",
+        "lib": ["ES2022"],
+        "module": "Node16",
+        "moduleResolution": "node16",
+        // Extra types
+        "types": ["vitest/globals"],
+        // Other
+        "noErrorTruncation": true,
+        "noEmit": true,
+        "outDir": "./dist"
+    },
+    "include": ["./src", "./test"],
+    "exclude": []
 }
