@@ -1,3 +1,3 @@
-module.exports = {
-	extends: ['@commitlint/config-conventional'],
-}
+const { commitlint } = require('@samialdury/config')
+
+module.exports = commitlint.config

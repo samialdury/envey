@@ -13,6 +13,9 @@ devDependencies:
   '@commitlint/config-conventional':
     specifier: 17.6.3
     version: 17.6.3
+  '@samialdury/config':
+    specifier: 0.0.1
+    version: 0.0.1(eslint@8.40.0)(prettier@2.8.8)
   '@types/node':
     specifier: 18.16.8
     version: 18.16.8
@@ -811,6 +814,16 @@ packages:
       picocolors: 1.0.0
       tiny-glob: 0.2.9
       tslib: 2.5.0
+    dev: true
+
+  /@samialdury/config@0.0.1(eslint@8.40.0)(prettier@2.8.8):
+    resolution: {integrity: sha512-+n883lhn0Obl0LxhtDq/5IZwb9/fqTR5lceKuylzhMCfOFB+NytJA2wKGxYkIWn+anXZ0DhO9XV3DV0ezqQfbg==}
+    peerDependencies:
+      eslint: ^8.0.0
+      prettier: ^2.0.0
+    dependencies:
+      eslint: 8.40.0
+      prettier: 2.8.8
     dev: true
 
   /@tsconfig/node10@1.0.9:

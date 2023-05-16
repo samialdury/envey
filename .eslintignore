@@ -1,6 +1,0 @@
-node_modules
-dist
-coverage
-commitlint.config.cjs
-lint-staged.config.cjs
-vitest.config.ts
