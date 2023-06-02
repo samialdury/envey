@@ -1,4 +1,4 @@
-import { type z } from 'zod'
+import type { z } from 'zod'
 
 import { EnveyValidationError } from './errors.js'
 import type { EnveyOptions, EnveySchema, InferEnveyConfig } from './types.js'
