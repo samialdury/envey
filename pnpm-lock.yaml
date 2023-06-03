@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 devDependencies:
   '@changesets/changelog-git':
@@ -14,8 +18,8 @@ devDependencies:
     specifier: 17.6.3
     version: 17.6.3
   '@samialdury/config':
-    specifier: 0.0.1
-    version: 0.0.1(eslint@8.40.0)(prettier@2.8.8)
+    specifier: 1.0.1
+    version: 1.0.1(eslint@8.40.0)(prettier@2.8.8)
   '@types/node':
     specifier: 18.16.8
     version: 18.16.8
@@ -816,8 +820,8 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /@samialdury/config@0.0.1(eslint@8.40.0)(prettier@2.8.8):
-    resolution: {integrity: sha512-+n883lhn0Obl0LxhtDq/5IZwb9/fqTR5lceKuylzhMCfOFB+NytJA2wKGxYkIWn+anXZ0DhO9XV3DV0ezqQfbg==}
+  /@samialdury/config@1.0.1(eslint@8.40.0)(prettier@2.8.8):
+    resolution: {integrity: sha512-N/1DfPZ7mFVxKL/0qUYzWzT4udNmlKPu4Q3IBxwdXqHPm326JCfY9Gt6C+1YkuO1HFEJHDantvo++elhfBjxpA==}
     peerDependencies:
       eslint: ^8.0.0
       prettier: ^2.0.0
