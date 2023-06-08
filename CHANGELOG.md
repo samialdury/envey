@@ -1,5 +1,14 @@
 # envey
 
+## 1.1.3
+
+### Patch Changes
+
+-   655c0bd: Update js test packages to v0.31.3
+-   33078ec: Update dependency @types/node to v18.16.16
+-   8d78169: Update linters
+-   6d487f2: Update dependency @samialdury/config to v1
+
 ## 1.1.2
 
 ### Patch Changes
