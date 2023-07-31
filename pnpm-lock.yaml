@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -18,8 +18,8 @@ devDependencies:
     specifier: 17.6.3
     version: 17.6.3
   '@samialdury/config':
-    specifier: 1.0.1
-    version: 1.0.1(eslint@8.41.0)(prettier@2.8.8)
+    specifier: 2.0.2
+    version: 2.0.2(eslint@8.41.0)(prettier@2.8.8)
   '@types/node':
     specifier: 18.16.16
     version: 18.16.16
@@ -820,8 +820,8 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /@samialdury/config@1.0.1(eslint@8.41.0)(prettier@2.8.8):
-    resolution: {integrity: sha512-N/1DfPZ7mFVxKL/0qUYzWzT4udNmlKPu4Q3IBxwdXqHPm326JCfY9Gt6C+1YkuO1HFEJHDantvo++elhfBjxpA==}
+  /@samialdury/config@2.0.2(eslint@8.41.0)(prettier@2.8.8):
+    resolution: {integrity: sha512-IByaU8ToOPpcWoorvtnp/cuQQ5PGJplApIsvVkpe33IQJXpV0w06O6Hbu4eRXPPAtujj6n820M/L/0gu0/fLcg==}
     peerDependencies:
       eslint: ^8.0.0
       prettier: ^2.0.0
