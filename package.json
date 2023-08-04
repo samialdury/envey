@@ -58,7 +58,7 @@
         "@types/node": "18.16.16",
         "@typescript-eslint/eslint-plugin": "6.2.0",
         "@typescript-eslint/parser": "6.2.0",
-        "@vitest/coverage-c8": "0.31.4",
+        "@vitest/coverage-c8": "0.33.0",
         "eslint": "8.41.0",
         "eslint-config-prettier": "8.8.0",
         "eslint-import-resolver-typescript": "3.5.5",
@@ -69,7 +69,7 @@
         "prettier": "2.8.8",
         "tsup": "7.1.0",
         "typescript": "5.0.4",
-        "vitest": "0.31.4",
+        "vitest": "0.34.1",
         "zod": "3.21.4"
     },
     "keywords": [
