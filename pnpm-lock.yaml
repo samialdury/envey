@@ -18,8 +18,8 @@ devDependencies:
     specifier: 17.6.3
     version: 17.6.3
   '@samialdury/config':
-    specifier: 1.0.1
-    version: 1.0.1(eslint@8.41.0)(prettier@2.8.8)
+    specifier: 3.0.5
+    version: 3.0.5(eslint@8.41.0)(prettier@2.8.8)
   '@types/node':
     specifier: 18.16.16
     version: 18.16.16
@@ -1023,8 +1023,8 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /@samialdury/config@1.0.1(eslint@8.41.0)(prettier@2.8.8):
-    resolution: {integrity: sha512-N/1DfPZ7mFVxKL/0qUYzWzT4udNmlKPu4Q3IBxwdXqHPm326JCfY9Gt6C+1YkuO1HFEJHDantvo++elhfBjxpA==}
+  /@samialdury/config@3.0.5(eslint@8.41.0)(prettier@2.8.8):
+    resolution: {integrity: sha512-HRvz+zzeHB3pxexXSCgAayVdx6UTID4fbj0lf9EUdQzkquUDoqf0y4MkahddCgukxv0gLwDrrl/Vo3MJC3jNYg==}
     peerDependencies:
       eslint: ^8.0.0
       prettier: ^2.0.0
