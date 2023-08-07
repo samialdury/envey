@@ -10,7 +10,7 @@ export default defineConfig({
         restoreMocks: true,
         unstubEnvs: true,
         coverage: {
-            provider: 'c8',
+            provider: 'v8',
             include: ['src/**/*.ts'],
             exclude: ['src/index.ts', 'src/**/types.ts', 'src/**/*.test.ts'],
             all: true,
@@ -18,6 +18,9 @@ export default defineConfig({
             functions: 80,
             branches: 80,
             statements: 80,
+        },
+        cache: {
+            dir: '.cache/vitest',
         },
     },
 })

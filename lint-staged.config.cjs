@@ -1,3 +1,3 @@
 const { lintStaged } = require('@samialdury/config')
 
-module.exports = lintStaged.config
+module.exports = lintStaged.config()

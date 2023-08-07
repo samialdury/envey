@@ -4,16 +4,24 @@
         "config:js-lib",
         ":semanticCommits",
         ":timezone(Europe/Prague)",
-        "schedule:monthly",
+        "schedule:earlyMondays",
         ":disableRateLimiting",
         ":label(dependencies)",
-        ":separateMultipleMajorReleases",
         "npm:unpublishSafe",
+        ":separateMultipleMajorReleases",
         "group:allNonMajor",
         "group:definitelyTyped",
         "group:jsTestNonMajor",
         "group:linters",
-        ":reviewer(samialdury)"
+        ":automergePr",
+        ":automergeRequireAllStatusChecks",
+        ":automergeDigest",
+        ":automergeMinor",
+        ":automergePatch",
+        ":automergeLinters",
+        ":automergeTesters",
+        ":automergeTypes"
     ],
-    "platformCommit": true
+    "platformCommit": true,
+    "platformAutomerge": true
 }

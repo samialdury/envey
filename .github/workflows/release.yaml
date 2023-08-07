@@ -2,8 +2,13 @@ name: Release
 
 on:
     workflow_dispatch:
+        inputs:
+            acknowledge:
+                description: 'I understand that this action will publish a new NPM & GitHub release.'
+                required: true
+                type: boolean
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+concurrency: release-${{ github.ref_name }}
 
 env:
     NODE_VERSION: 18
@@ -11,11 +16,32 @@ env:
 
 jobs:
     release:
-        runs-on: ubuntu-22.04
+        name: Release
+        if: ${{ inputs.acknowledge }}
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write # to be able to publish a GitHub release
+            issues: write # to be able to comment on released issues
+            pull-requests: write # to be able to comment on released pull requests
+            id-token: write # to enable use of OIDC for npm provenance
         steps:
             - name: Checkout
               uses: actions/checkout@v3
               timeout-minutes: 2
+              with:
+                  token: ${{ secrets.BOT_PAT }}
+
+            - name: Import GPG key
+              uses: crazy-max/ghaction-import-gpg@v5
+              with:
+                  gpg_private_key: ${{ secrets.BOT_GPG_PRIVATE_KEY }}
+                  git_user_signingkey: true
+                  git_config_global: true
+                  git_commit_gpgsign: true
+                  git_tag_gpgsign: false
+                  git_push_gpgsign: false
+                  git_committer_name: ${{ secrets.BOT_USERNAME }}
+                  git_committer_email: ${{ secrets.BOT_EMAIL }}
 
             - name: Set up pnpm
               uses: pnpm/action-setup@v2
@@ -29,22 +55,41 @@ jobs:
               with:
                   node-version: ${{ env.NODE_VERSION }}
                   cache: pnpm
+                  cache-dependency-path: pnpm-lock.yaml
 
-            - name: Install NPM dependencies
+            - name: Get pnpm store directory
+              id: pnpm-store
               timeout-minutes: 2
               run: |
-                  pnpm install --frozen-lockfile
+                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-            - name: Build TypeScript
+            - name: Restore pnpm cache
+              uses: actions/cache@v3
               timeout-minutes: 2
-              run: |
-                  pnpm build
-
-            - name: Create GitHub release and publish to NPM
-              uses: changesets/action@v1
-              timeout-minutes: 2
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               with:
-                  publish: pnpm release
+                  path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+                  key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-pnpm-${{ env.PNPM_VERSION }}-store-${{ hashFiles('pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-${{ env.NODE_VERSION }}-pnpm-${{ env.PNPM_VERSION }}-store-
+
+            - name: Install npm dependencies
+              timeout-minutes: 2
+              run: |
+                  make install-ci
+
+            - name: Bundle TypeScript
+              timeout-minutes: 2
+              run: |
+                  make build
+
+            - name: Release to NPM & GitHub
+              timeout-minutes: 2
+              run: |
+                  make release
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.BOT_PAT }}
+                  GIT_AUTHOR_NAME: ${{ secrets.BOT_USERNAME }}
+                  GIT_AUTHOR_EMAIL: ${{ secrets.BOT_EMAIL }}
+                  GIT_COMMITTER_NAME: ${{ secrets.BOT_USERNAME }}
+                  GIT_COMMITTER_EMAIL: ${{ secrets.BOT_EMAIL }}

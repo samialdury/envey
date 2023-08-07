@@ -17,7 +17,7 @@ import type { EnveyOptions, EnveySchema, InferEnveyConfig } from './types.js'
 export function createConfig<S extends EnveySchema>(
     zodInstance: typeof z,
     schema: S,
-    options?: EnveyOptions
+    options?: EnveyOptions,
 ): InferEnveyConfig<S> {
     const { validate = true } = options ?? {}
 
@@ -38,7 +38,7 @@ export function createConfig<S extends EnveySchema>(
         if (!validationResult.success) {
             throw new EnveyValidationError(
                 validationResult.error.issues,
-                `Invalid configuration`
+                `Invalid configuration`,
             )
         }
 

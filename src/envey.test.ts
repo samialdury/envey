@@ -63,7 +63,7 @@ describe('Envey', () => {
                             format: z.string(),
                         },
                     },
-                    { validate: false }
+                    { validate: false },
                 )
 
                 expect(config.someKey).toBeUndefined()
@@ -85,7 +85,7 @@ describe('Envey', () => {
                                 format: z.enum(['1', '2']),
                             },
                         },
-                        { validate: true }
+                        { validate: true },
                     )
                 } catch (err) {
                     if (err instanceof EnveyValidationError) {
@@ -110,7 +110,7 @@ describe('Envey', () => {
                         ])
                     } else {
                         expect.fail(
-                            'Error is not an instance of EnveyValidationError'
+                            'Error is not an instance of EnveyValidationError',
                         )
                     }
                 }
@@ -126,7 +126,7 @@ describe('Envey', () => {
                                 format: z.string(),
                             },
                         },
-                        { validate: true }
+                        { validate: true },
                     )
                 } catch (err) {
                     if (err instanceof EnveyValidationError) {
@@ -142,7 +142,7 @@ describe('Envey', () => {
                         ])
                     } else {
                         expect.fail(
-                            'Error is not an instance of EnveyValidationError'
+                            'Error is not an instance of EnveyValidationError',
                         )
                     }
                 }
@@ -164,13 +164,11 @@ describe('Envey', () => {
                 let config: InferEnveyConfig<typeof schema>
 
                 // @ts-expect-error - just for testing
-                expectTypeOf(config)
-                    // eslint-disable-next-line prettier/prettier
-                    .toEqualTypeOf<
-                        Readonly<{
-                            nodeEnv: 'production' | 'test' | 'development'
-                        }>
-                    >()
+                expectTypeOf(config).toEqualTypeOf<
+                    Readonly<{
+                        nodeEnv: 'production' | 'test' | 'development'
+                    }>
+                >()
             })
 
             it('Should infer with optional with undefined', () => {
@@ -185,13 +183,11 @@ describe('Envey', () => {
                 let config: InferEnveyConfig<typeof schema>
 
                 // @ts-expect-error - just for testing
-                expectTypeOf(config)
-                    // eslint-disable-next-line prettier/prettier
-                    .toEqualTypeOf<
-                        Readonly<{
-                            nodeEnv: string | undefined
-                        }>
-                    >()
+                expectTypeOf(config).toEqualTypeOf<
+                    Readonly<{
+                        nodeEnv: string | undefined
+                    }>
+                >()
             })
         })
     })

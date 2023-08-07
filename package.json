@@ -2,76 +2,6 @@
     "name": "envey",
     "version": "1.1.3",
     "description": "Type-safe configuration schemas for Node.js",
-    "author": "Sami Al-Dury",
-    "license": "MIT",
-    "homepage": "https://github.com/samialdury/envey#readme",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/samialdury/envey.git"
-    },
-    "bugs": {
-        "url": "https://github.com/samialdury/envey/issues"
-    },
-    "type": "module",
-    "main": "./dist/index.cjs",
-    "module": "./dist/index.js",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "require": "./dist/index.cjs",
-            "import": "./dist/index.js"
-        },
-        "./package.json": "./package.json"
-    },
-    "types": "./dist/index.d.ts",
-    "files": [
-        "./dist"
-    ],
-    "scripts": {
-        "prepare": "husky install",
-        "typecheck": "tsc",
-        "build": "rm -rf ./dist && tsup",
-        "prettier": "prettier --cache --cache-location=./.cache/.prettiercache --write .",
-        "prettier:ci": "prettier --check .",
-        "eslint": "eslint --max-warnings 0 --cache --cache-location ./.cache/.eslintcache --fix .",
-        "eslint:ci": "eslint --max-warnings 0 .",
-        "lint": "pnpm prettier && pnpm eslint",
-        "lint:ci": "pnpm prettier:ci && pnpm eslint:ci",
-        "test": "vitest run",
-        "test:watch": "vitest watch",
-        "test:ci": "vitest run --coverage",
-        "version": "changeset add",
-        "release": "pnpm build && changeset publish"
-    },
-    "engines": {
-        "node": ">=18"
-    },
-    "peerDependencies": {
-        "zod": "^3.0.0"
-    },
-    "devDependencies": {
-        "@changesets/changelog-git": "0.1.14",
-        "@changesets/cli": "2.26.1",
-        "@commitlint/cli": "17.6.3",
-        "@commitlint/config-conventional": "17.6.3",
-        "@samialdury/config": "1.0.1",
-        "@types/node": "18.16.16",
-        "@typescript-eslint/eslint-plugin": "6.2.0",
-        "@typescript-eslint/parser": "6.2.0",
-        "@vitest/coverage-c8": "0.31.4",
-        "eslint": "8.41.0",
-        "eslint-config-prettier": "8.8.0",
-        "eslint-import-resolver-typescript": "3.5.5",
-        "eslint-plugin-import": "2.27.5",
-        "eslint-plugin-prettier": "4.2.1",
-        "husky": "8.0.3",
-        "lint-staged": "13.2.2",
-        "prettier": "2.8.8",
-        "tsup": "7.1.0",
-        "typescript": "5.0.4",
-        "vitest": "0.31.4",
-        "zod": "3.21.4"
-    },
     "keywords": [
         "configuration",
         "config",
@@ -82,5 +12,56 @@
         "environment",
         "node",
         "nodejs"
-    ]
+    ],
+    "homepage": "https://github.com/samialdury/envey#readme",
+    "bugs": {
+        "url": "https://github.com/samialdury/envey/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/samialdury/envey.git"
+    },
+    "license": "MIT",
+    "author": "Sami Al-Dury",
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/index.cjs",
+            "import": "./dist/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "./dist",
+        "./src"
+    ],
+    "devDependencies": {
+        "@commitlint/cli": "17.6.7",
+        "@samialdury/config": "5.6.0",
+        "@types/node": "20.4.8",
+        "@vitest/coverage-v8": "0.34.1",
+        "eslint": "8.46.0",
+        "husky": "8.0.3",
+        "lint-staged": "13.2.3",
+        "prettier": "3.0.1",
+        "semantic-release": "21.0.7",
+        "tsup": "7.2.0",
+        "typescript": "5.1.6",
+        "vitest": "0.34.1",
+        "zod": "3.21.4"
+    },
+    "peerDependencies": {
+        "zod": "^3.0.0"
+    },
+    "engines": {
+        "node": ">=18"
+    },
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    }
 }

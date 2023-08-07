@@ -25,11 +25,16 @@
         "lib": ["ES2022"],
         "module": "Node16",
         "moduleResolution": "node16",
+        // Source maps
+        "declarationMap": true,
+        "declaration": true,
+        "sourceMap": true,
         // Other
         "noErrorTruncation": true,
-        "noEmit": true,
+        "rootDir": "src",
+        "outDir": "dist",
         // Extra types
         "types": ["vitest/globals"]
     },
-    "include": ["./src", "./test"]
+    "include": ["src", "test"]
 }
