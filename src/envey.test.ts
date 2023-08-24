@@ -11,51 +11,75 @@ describe('Envey', () => {
         })
 
         it('Should return ENV value', () => {
-            const config = createConfig(z, {
-                nodeEnv: {
-                    env: 'NODE_ENV',
-                    format: z
-                        .enum(['production', 'development', 'test'])
-                        .default('production'),
+            const result = createConfig(
+                z,
+                {
+                    someEnum: {
+                        env: 'SOME_ENUM',
+                        format: z
+                            .enum(['value1', 'value2', 'value3'])
+                            .default('value2'),
+                    },
                 },
-            })
+                { validate: true },
+            )
 
-            expect(config.nodeEnv).toBe('test')
-            expectTypeOf(config.nodeEnv).toEqualTypeOf<
-                'production' | 'development' | 'test'
+            if (!result.success) {
+                expect.fail('Validation should have passed')
+            }
+
+            expect(result.config.someEnum).toBe('value1')
+            expectTypeOf(result.config.someEnum).toEqualTypeOf<
+                'value1' | 'value2' | 'value3'
             >()
         })
 
         it('Should return with possible undefined', () => {
-            const config = createConfig(z, {
-                nodeEnv: {
-                    env: 'NODE_ENV',
-                    format: z
-                        .enum(['production', 'development', 'test'])
-                        .optional(),
+            const result = createConfig(
+                z,
+                {
+                    someEnum: {
+                        env: 'SOME_ENUM',
+                        format: z
+                            .enum(['value1', 'value2', 'value3'])
+                            .optional(),
+                    },
                 },
-            })
+                { validate: true },
+            )
 
-            expect(config.nodeEnv).toBe('test')
-            expectTypeOf(config.nodeEnv).toEqualTypeOf<
-                'production' | 'development' | 'test' | undefined
+            if (!result.success) {
+                expect.fail('Validation should have passed')
+            }
+
+            expect(result.config.someEnum).toBe('value1')
+            expectTypeOf(result.config.someEnum).toEqualTypeOf<
+                'value1' | 'value2' | 'value3' | undefined
             >()
         })
 
         it('Should leave value as undefined', () => {
-            const config = createConfig(z, {
-                projectName: {
-                    env: undefined,
-                    format: z.string().default('envey'),
+            const result = createConfig(
+                z,
+                {
+                    projectName: {
+                        env: undefined,
+                        format: z.string().default('envey'),
+                    },
                 },
-            })
+                { validate: true },
+            )
 
-            expect(config.projectName).toBe('envey')
+            if (!result.success) {
+                expect.fail('Validation should have passed')
+            }
+
+            expect(result.config.projectName).toBe('envey')
         })
 
         describe('Validation', () => {
             it('Should not throw error if validation is set to false', () => {
-                const config = createConfig(
+                const result = createConfig(
                     z,
                     {
                         someKey: {
@@ -66,85 +90,53 @@ describe('Envey', () => {
                     { validate: false },
                 )
 
-                expect(config.someKey).toBeUndefined()
+                expect(result.success).toBe(true)
+                expect(result.config.someKey).toBeUndefined()
             })
 
             it('Should throw error if validation is set to true', () => {
                 vitest.stubEnv('INVALID_VAR', '3')
 
-                try {
-                    createConfig(
-                        z,
-                        {
-                            someKey: {
-                                env: 'NON_PRESENT_ENV_VAR',
-                                format: z.string(),
-                            },
-                            someKey2: {
-                                env: 'INVALID_VAR',
-                                format: z.enum(['1', '2']),
-                            },
+                const result = createConfig(
+                    z,
+                    {
+                        someKey: {
+                            env: 'NON_PRESENT_ENV_VAR',
+                            format: z.string(),
                         },
-                        { validate: true },
-                    )
-                } catch (err) {
-                    if (err instanceof EnveyValidationError) {
-                        expect(err.name).toBe('EnveyValidationError')
-                        expect(err.message).toBe('Invalid configuration')
-                        expect(err.issues).toEqual([
-                            {
-                                code: 'invalid_type',
-                                expected: 'string',
-                                received: 'undefined',
-                                path: ['someKey'],
-                                message: 'Required',
-                            },
-                            {
-                                code: 'invalid_enum_value',
-                                message:
-                                    "Invalid enum value. Expected '1' | '2', received '3'",
-                                options: ['1', '2'],
-                                path: ['someKey2'],
-                                received: '3',
-                            },
-                        ])
-                    } else {
-                        expect.fail(
-                            'Error is not an instance of EnveyValidationError',
-                        )
-                    }
-                }
-            })
+                        someKey2: {
+                            env: 'INVALID_VAR',
+                            format: z.enum(['1', '2']),
+                        },
+                    },
+                    { validate: true },
+                )
 
-            it('Should validate by default, if no options are set', () => {
-                try {
-                    createConfig(
-                        z,
+                expect(result.success).toBe(false)
+
+                if (result.success) {
+                    expect.fail('Validation should have failed')
+                } else {
+                    expect(result.error).toBeInstanceOf(EnveyValidationError)
+                    expect(result.error.name).toBe('EnveyValidationError')
+                    expect(result.error.message).toBe('Invalid configuration')
+                    expect(result.error.issues).toEqual([
                         {
-                            someKey: {
-                                env: 'NON_PRESENT_ENV_VAR',
-                                format: z.string(),
-                            },
+                            code: 'invalid_type',
+                            expected: 'string',
+                            received: 'undefined',
+                            path: ['someKey'],
+                            message: 'Required',
                         },
-                        { validate: true },
-                    )
-                } catch (err) {
-                    if (err instanceof EnveyValidationError) {
-                        expect(err.message).toBe('Invalid configuration')
-                        expect(err.issues).toEqual([
-                            {
-                                code: 'invalid_type',
-                                expected: 'string',
-                                received: 'undefined',
-                                path: ['someKey'],
-                                message: 'Required',
-                            },
-                        ])
-                    } else {
-                        expect.fail(
-                            'Error is not an instance of EnveyValidationError',
-                        )
-                    }
+                        {
+                            code: 'invalid_enum_value',
+                            message:
+                                "Invalid enum value. Expected '1' | '2', received '3'",
+                            options: ['1', '2'],
+                            path: ['someKey2'],
+                            received: '3',
+                        },
+                    ])
                 }
             })
         })
@@ -152,11 +144,11 @@ describe('Envey', () => {
         describe('Types', () => {
             it('Should infer type of schema', () => {
                 const schema = {
-                    nodeEnv: {
-                        env: 'NODE_ENV',
+                    someEnum: {
+                        env: 'SOME_ENUM',
                         format: z
-                            .enum(['production', 'test', 'development'])
-                            .default('production'),
+                            .enum(['value1', 'value2', 'value3'])
+                            .default('value2'),
                     },
                 } satisfies EnveySchema
 
@@ -166,14 +158,14 @@ describe('Envey', () => {
                 // @ts-expect-error - just for testing
                 expectTypeOf(config).toEqualTypeOf<
                     Readonly<{
-                        nodeEnv: 'production' | 'test' | 'development'
+                        someEnum: 'value1' | 'value2' | 'value3'
                     }>
                 >()
             })
 
             it('Should infer with optional with undefined', () => {
                 const schema = {
-                    nodeEnv: {
+                    someValue: {
                         env: undefined,
                         format: z.string().optional(),
                     },
@@ -185,7 +177,7 @@ describe('Envey', () => {
                 // @ts-expect-error - just for testing
                 expectTypeOf(config).toEqualTypeOf<
                     Readonly<{
-                        nodeEnv: string | undefined
+                        someValue: string | undefined
                     }>
                 >()
             })

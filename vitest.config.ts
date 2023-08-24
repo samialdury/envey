@@ -4,7 +4,7 @@ export default defineConfig({
     test: {
         include: ['./src/**/*.test.ts', './test/**/*.test.ts'],
         env: {
-            NODE_ENV: 'test',
+            SOME_ENUM: 'value1',
         },
         globals: true,
         restoreMocks: true,

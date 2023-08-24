@@ -1,7 +1,12 @@
 import type { z } from 'zod'
 
 import { EnveyValidationError } from './errors.js'
-import type { EnveyOptions, EnveySchema, InferEnveyConfig } from './types.js'
+import type {
+    CreateConfigResult,
+    EnveyOptions,
+    EnveySchema,
+    InferEnveyConfig,
+} from './types.js'
 
 /**
  * Constructs a config object from schema with optional validation.
@@ -11,15 +16,16 @@ import type { EnveyOptions, EnveySchema, InferEnveyConfig } from './types.js'
  * `schema` - See {@link EnveySchema}.
  *
  * `options` - See {@link EnveyOptions}.
- *
- * Throws {@link EnveyValidationError} if validation fails.
  */
-export function createConfig<S extends EnveySchema>(
+export function createConfig<
+    S extends EnveySchema,
+    O extends EnveyOptions = EnveyOptions,
+>(
     zodInstance: typeof z,
     schema: S,
-    options?: EnveyOptions,
-): InferEnveyConfig<S> {
-    const { validate = true } = options ?? {}
+    options: O,
+): CreateConfigResult<O, EnveyValidationError, InferEnveyConfig<S>> {
+    const { validate } = options
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const config: Record<string, any> = {}
@@ -36,14 +42,24 @@ export function createConfig<S extends EnveySchema>(
         const validationResult = zodInstance.object(config).safeParse(values)
 
         if (!validationResult.success) {
-            throw new EnveyValidationError(
-                validationResult.error.issues,
-                `Invalid configuration`,
-            )
+            // @ts-expect-error - This is fine
+            return {
+                success: false,
+                error: new EnveyValidationError(
+                    validationResult.error.issues,
+                    `Invalid configuration`,
+                ),
+            }
         }
 
-        return validationResult.data as InferEnveyConfig<S>
+        return {
+            success: true,
+            config: validationResult.data as InferEnveyConfig<S>,
+        }
     }
 
-    return values as InferEnveyConfig<S>
+    return {
+        success: true,
+        config: values as InferEnveyConfig<S>,
+    }
 }

@@ -10,10 +10,6 @@ export type EnveySchema = Record<string, EnveyField<unknown>>
 export interface EnveyOptions {
     /**
      * Whether to validate the config or not.
-     * Throws {@link EnveyValidationError} if validation fails.
-     *
-     * Defaults to
-     * `true`
      */
     validate?: boolean
 }
@@ -27,3 +23,19 @@ export type InferEnveyConfig<S extends EnveySchema> = Readonly<{
         ? Exclude<S[K]['format']['_type'], undefined>
         : S[K]['format']['_type']
 }>
+
+export interface SuccessResult<T> {
+    success: true
+    config: T
+}
+
+export interface FailureResult<E> {
+    success: false
+    error: E
+}
+
+export type CreateConfigResult<O extends EnveyOptions, E, T> = O extends {
+    validate: true
+}
+    ? SuccessResult<T> | FailureResult<E>
+    : SuccessResult<T>

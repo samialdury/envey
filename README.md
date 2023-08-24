@@ -15,43 +15,54 @@ pnpm i zod envey
 import { z } from 'zod'
 import { createConfig } from 'envey'
 
-const config = createConfig({
-  z,
-  {
-    nodeEnv: {
-      env: 'NODE_ENV',
-      format: z
-        .enum(['production', 'development', 'test'])
-        .default('production'),
+const result = createConfig({
+    z,
+    {
+        databaseUrl: {
+            env: 'DATABASE_URL',
+            format: z.string(),
+        },
+        port: {
+            env: 'PORT',
+            format: z.coerce.number().int().positive().max(65535),
+        },
     },
-    port: {
-      env: 'PORT',
-      format: z.coerce.number().int().positive().max(65535),
-    },
-  },
-  { validate: true }
+    { validate: true },
 })
-// ^? {
-//      readonly nodeEnv: "production" | "development" | "test";
-//      readonly port: number;
-//    }
+
+if (!result.success) {
+    console.error(result.error.issues)
+    // Handle error
+}
+
+const { config } = result
+//    ^? {
+//           readonly databaseUrl: string;
+//           readonly port: number;
+//       }
 ```
 
 Supports schema type inference, similar to Zod's [infer](https://zod.dev/?id=type-inference):
 
 ```ts
 const schema = {
-  nodeEnv: {
-    env: 'NODE_ENV',
-    format: z
-      .enum(['production', 'test', 'development'])
-      .default('production'),
-  },
+    logLevel: {
+        env: 'LOG_LEVEL',
+        format: z.enum([
+            'fatal',
+            'error',
+            'warn',
+            'info',
+            'debug',
+            'trace',
+            'silent',
+        ]),
+    },
 } satisfies EnveySchema
 
 type Config = InferEnveyConfig<typeof schema>
 //   ^? {
-//        readonly nodeEnv: "production" | "development" | "test";
+//          readonly logLevel:  "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent"
 //      }
 ```
 
