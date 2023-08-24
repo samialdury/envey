@@ -1,6 +1,6 @@
 {
     "name": "envey",
-    "version": "1.2.0",
+    "version": "2.0.0",
     "description": "Type-safe configuration schemas for Node.js",
     "keywords": [
         "configuration",

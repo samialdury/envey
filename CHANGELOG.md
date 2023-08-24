@@ -1,3 +1,14 @@
+# [2.0.0](https://github.com/samialdury/envey/compare/v1.2.0...v2.0.0) (2023-08-24)
+
+
+* feat!: return error instead of throwing it ([08221a0](https://github.com/samialdury/envey/commit/08221a0a1a54d806a6e9e5346ac88c63508ceb54))
+
+
+### BREAKING CHANGES
+
+* `createConfig` no longer throws an error if validation fails,
+instead returns a discriminated union with the parsed result or the error.
+
 # [1.2.0](https://github.com/samialdury/envey/compare/v1.1.3...v1.2.0) (2023-08-07)
 
 
