@@ -42,7 +42,7 @@
     "devDependencies": {
         "@commitlint/cli": "17.7.1",
         "@samialdury/config": "5.6.1",
-        "@types/node": "20.4.10",
+        "@types/node": "20.5.6",
         "@vitest/coverage-v8": "0.34.2",
         "eslint": "8.47.0",
         "husky": "8.0.3",
