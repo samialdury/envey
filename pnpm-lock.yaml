@@ -10,7 +10,7 @@ devDependencies:
     version: 17.7.1
   '@samialdury/config':
     specifier: 5.6.1
-    version: 5.6.1(@commitlint/cli@17.7.1)(eslint@8.47.0)(lint-staged@14.0.0)(prettier@3.0.2)(semantic-release@21.0.9)(typescript@5.1.6)
+    version: 5.6.1(@commitlint/cli@17.7.1)(eslint@8.47.0)(lint-staged@14.0.1)(prettier@3.0.2)(semantic-release@21.0.9)(typescript@5.1.6)
   '@types/node':
     specifier: 20.4.10
     version: 20.4.10
@@ -24,8 +24,8 @@ devDependencies:
     specifier: 8.0.3
     version: 8.0.3
   lint-staged:
-    specifier: 14.0.0
-    version: 14.0.0
+    specifier: 14.0.1
+    version: 14.0.1
   prettier:
     specifier: 3.0.2
     version: 3.0.2
@@ -737,7 +737,7 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@samialdury/config@5.6.1(@commitlint/cli@17.7.1)(eslint@8.47.0)(lint-staged@14.0.0)(prettier@3.0.2)(semantic-release@21.0.9)(typescript@5.1.6):
+  /@samialdury/config@5.6.1(@commitlint/cli@17.7.1)(eslint@8.47.0)(lint-staged@14.0.1)(prettier@3.0.2)(semantic-release@21.0.9)(typescript@5.1.6):
     resolution: {integrity: sha512-HXBb0WEZ3fyQ2r5kcpLQWbf+kZa1M/BR+fVwlrbXStOLZeAQ4N7wzzi8RFHd+MyF4oCf+PWC9zh02a1lyM11Fw==}
     peerDependencies:
       '@commitlint/cli': ^17.0.0
@@ -760,7 +760,7 @@ packages:
       eslint-plugin-import: 2.28.0(@typescript-eslint/parser@6.3.0)(eslint-import-resolver-typescript@3.6.0)(eslint@8.47.0)
       eslint-plugin-unicorn: 48.0.1(eslint@8.47.0)
       globals: 13.20.0
-      lint-staged: 14.0.0
+      lint-staged: 14.0.1
       prettier: 3.0.2
       prettier-plugin-astro: 0.11.0
       prettier-plugin-packagejson: 2.4.5(prettier@3.0.2)
@@ -3397,8 +3397,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
-  /lint-staged@14.0.0:
-    resolution: {integrity: sha512-0tLf0pqZYkar/wu3nTctk4rVIG+d7PanDYv4/IQR4qwdqfQkTDziLRFnqMcLuLBTuUqmcLwsHPD2EjQ18d/oaA==}
+  /lint-staged@14.0.1:
+    resolution: {integrity: sha512-Mw0cL6HXnHN1ag0mN/Dg4g6sr8uf8sn98w2Oc1ECtFto9tvRF7nkXGJRbx8gPlHyoR0pLyBr2lQHbWwmUHe1Sw==}
     engines: {node: ^16.14.0 || >=18.0.0}
     hasBin: true
     dependencies:
