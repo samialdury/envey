@@ -1,8 +1,7 @@
 import { z } from 'zod'
-
+import type { EnveySchema, InferEnveyConfig } from './types.js'
 import { createConfig } from './envey.js'
 import { EnveyValidationError } from './errors.js'
-import type { EnveySchema, InferEnveyConfig } from './types.js'
 
 describe('Envey', () => {
     describe('createConfig', () => {
@@ -124,9 +123,9 @@ describe('Envey', () => {
                         {
                             code: 'invalid_type',
                             expected: 'string',
-                            received: 'undefined',
-                            path: ['someKey'],
                             message: 'Required',
+                            path: ['someKey'],
+                            received: 'undefined',
                         },
                         {
                             code: 'invalid_enum_value',

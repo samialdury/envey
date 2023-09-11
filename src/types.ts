@@ -25,17 +25,17 @@ export type InferEnveyConfig<S extends EnveySchema> = Readonly<{
 }>
 
 export interface SuccessResult<T> {
-    success: true
     config: T
+    success: true
 }
 
 export interface FailureResult<E> {
-    success: false
     error: E
+    success: false
 }
 
 export type CreateConfigResult<O extends EnveyOptions, E, T> = O extends {
     validate: true
 }
-    ? SuccessResult<T> | FailureResult<E>
+    ? FailureResult<E> | SuccessResult<T>
     : SuccessResult<T>

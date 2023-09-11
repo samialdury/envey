@@ -1,12 +1,11 @@
 import type { z } from 'zod'
-
-import { EnveyValidationError } from './errors.js'
 import type {
     CreateConfigResult,
     EnveyOptions,
     EnveySchema,
     InferEnveyConfig,
 } from './types.js'
+import { EnveyValidationError } from './errors.js'
 
 /**
  * Constructs a config object from schema with optional validation.
@@ -44,22 +43,22 @@ export function createConfig<
         if (!validationResult.success) {
             // @ts-expect-error - This is fine
             return {
-                success: false,
                 error: new EnveyValidationError(
                     validationResult.error.issues,
                     `Invalid configuration`,
                 ),
+                success: false,
             }
         }
 
         return {
-            success: true,
             config: validationResult.data as InferEnveyConfig<S>,
+            success: true,
         }
     }
 
     return {
-        success: true,
         config: values as InferEnveyConfig<S>,
+        success: true,
     }
 }
