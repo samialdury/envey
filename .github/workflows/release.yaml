@@ -11,7 +11,7 @@ on:
 concurrency: release-${{ github.ref_name }}
 
 env:
-    NODE_VERSION: 18
+    NODE_VERSION: 20
     PNPM_VERSION: 8
 
 jobs:

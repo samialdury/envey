@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
 
 - OS: [e.g. macOS]
 - Version: [e.g. 1.0.0]
-- Node.js version: [e.g. 18]
+- Node.js version: [e.g. 20]
 
 **Additional context**
 Add any other context about the problem here.

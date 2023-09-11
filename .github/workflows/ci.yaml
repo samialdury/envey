@@ -15,7 +15,7 @@ on:
 concurrency: ci-${{ github.ref_name }}
 
 env:
-    NODE_VERSION: 18
+    NODE_VERSION: 20
     PNPM_VERSION: 8
     COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     BRANCH_OR_TAG: ${{ github.event.pull_request.head.ref || github.ref_name }}
