@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/samialdury/envey/compare/v2.0.0...v2.1.0) (2023-09-14)
+
+
+### Features
+
+* upgrade to Node 20 ([ea3b549](https://github.com/samialdury/envey/commit/ea3b549cf3bcc430750db696d1a76e948bbadbb6))
+
 # [2.0.0](https://github.com/samialdury/envey/compare/v1.2.0...v2.0.0) (2023-08-24)
 
 
