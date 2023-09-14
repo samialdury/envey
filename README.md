@@ -1,15 +1,18 @@
-# Envey
+# `envey`
 
-[![NPM version](https://img.shields.io/npm/v/envey)](https://www.npmjs.com/package/envey)
-[![CI status](https://github.com/samialdury/envey/actions/workflows/ci.yaml/badge.svg)](https://github.com/samialdury/envey/actions/workflows/ci.yaml)
+[![CI status](https://github.com/samialdury/envey/actions/workflows/ci.yml/badge.svg)](https://github.com/samialdury/envey/actions/workflows/ci.yml)
+[![license](https://img.shields.io/github/license/samialdury/envey)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/envey)](https://www.npmjs.com/package/envey)
 
-Envey is a library designed to simplify the process of managing and validating environment variables in Node.js applications. It provides a fully type-safe solution for defining and parsing configuration schemas, leveraging the power of [Zod's](https://zod.dev/) excellent type system.
+Envey is a library designed to simplify the process of managing and validating environment variables in Node.js applications. It provides a fully type-safe solution for defining and parsing configuration schemas, leveraging the power of [Zod](https://zod.dev/)'s excellent type system.
 
-## Usage
+## Installation
 
 ```sh
-pnpm i zod envey
+pnpm i -E zod envey
 ```
+
+## Usage
 
 ```ts
 import { z } from 'zod'

@@ -11,6 +11,7 @@ on:
 concurrency: release-${{ github.ref_name }}
 
 env:
+    TERM: xterm-256color
     NODE_VERSION: 20
     PNPM_VERSION: 8
 
