@@ -9,8 +9,8 @@ devDependencies:
     specifier: 17.7.1
     version: 17.7.1
   '@samialdury/config':
-    specifier: 5.10.0
-    version: 5.10.0(@commitlint/cli@17.7.1)(eslint@8.48.0)(lint-staged@14.0.1)(prettier@3.0.3)(semantic-release@21.1.1)(typescript@5.2.2)
+    specifier: 5.11.0
+    version: 5.11.0(@commitlint/cli@17.7.1)(eslint@8.48.0)(lint-staged@14.0.1)(prettier@3.0.3)(semantic-release@21.1.1)(typescript@5.2.2)
   '@types/node':
     specifier: 20.5.9
     version: 20.5.9
@@ -72,16 +72,11 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
-  /@babel/helper-validator-identifier@7.22.5:
-    resolution: {integrity: sha512-aJXu+6lErq8ltp+JhkJUfk1MTGyuA4v7f3pA+BJ5HLfNC6nAQ0Cpi9uOquUj8Hehg0aUiHzWQbOVJGao6ztBAQ==}
-    engines: {node: '>=6.9.0'}
-    dev: true
-
   /@babel/highlight@7.22.5:
     resolution: {integrity: sha512-BSKlD1hgnedS5XRnGOljZawtag7H1yPfQp0tdNJCHoH6AZ+Pcm9VvkrK59/Yy593Ypg0zMxH2BxD1VPYUQ7UIw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/helper-validator-identifier': 7.22.5
+      '@babel/helper-validator-identifier': 7.22.15
       chalk: 2.4.2
       js-tokens: 4.0.0
     dev: true
@@ -497,7 +492,7 @@ packages:
       ajv: 6.12.6
       debug: 4.3.4
       espree: 9.6.1
-      globals: 13.20.0
+      globals: 13.21.0
       ignore: 5.2.4
       import-fresh: 3.3.0
       js-yaml: 4.1.0
@@ -738,8 +733,8 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@samialdury/config@5.10.0(@commitlint/cli@17.7.1)(eslint@8.48.0)(lint-staged@14.0.1)(prettier@3.0.3)(semantic-release@21.1.1)(typescript@5.2.2):
-    resolution: {integrity: sha512-cnN14X9hHGL73n4P7TVc6+C6nxyI5t5B0C0RU3PyEzz3A+/kO6NZDS9EnsDpdbstKntbka3dJBr5yoU70us0NQ==}
+  /@samialdury/config@5.11.0(@commitlint/cli@17.7.1)(eslint@8.48.0)(lint-staged@14.0.1)(prettier@3.0.3)(semantic-release@21.1.1)(typescript@5.2.2):
+    resolution: {integrity: sha512-4gcGEzzkwqPsNFUfbHCPXHKqPBWaNiPFLnuM5auptcuPUc1tsNS8ATQ6fsFiHnCCv6ArimLSlRDNc9Evja3SvQ==}
     peerDependencies:
       '@commitlint/cli': ^17.0.0
       eslint: ^8.0.0
