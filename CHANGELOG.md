@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/samialdury/envey/compare/v2.1.0...v2.2.0) (2023-09-26)
+
+
+### Features
+
+* add `bool` helper for Zod ([4e47376](https://github.com/samialdury/envey/commit/4e47376138cfc44607f8a4e13adc36bf43a23ff0))
+
 # [2.1.0](https://github.com/samialdury/envey/compare/v2.0.0...v2.1.0) (2023-09-14)
 
 
