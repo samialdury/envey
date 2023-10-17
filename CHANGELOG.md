@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/samialdury/envey/compare/v2.2.0...v2.2.1) (2023-10-17)
+
+
+### Bug Fixes
+
+* bundle configuration ([b381e3a](https://github.com/samialdury/envey/commit/b381e3ac1323f30761b3409d396e7a4df34c7fe1))
+
 # [2.2.0](https://github.com/samialdury/envey/compare/v2.1.0...v2.2.0) (2023-09-26)
 
 
