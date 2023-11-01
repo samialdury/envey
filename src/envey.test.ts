@@ -151,7 +151,6 @@ describe('Envey', () => {
                     },
                 } satisfies EnveySchema
 
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 let config: InferEnveyConfig<typeof schema>
 
                 // @ts-expect-error - just for testing
@@ -170,7 +169,6 @@ describe('Envey', () => {
                     },
                 } satisfies EnveySchema
 
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 let config: InferEnveyConfig<typeof schema>
 
                 // @ts-expect-error - just for testing
