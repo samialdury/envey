@@ -45,7 +45,7 @@
         "./src"
     ],
     "devDependencies": {
-        "@commitlint/cli": "18.4.3",
+        "@commitlint/cli": "18.4.4",
         "@samialdury/config": "6.2.0",
         "@types/node": "20.10.5",
         "@vitest/coverage-v8": "1.1.0",
