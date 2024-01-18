@@ -72,6 +72,8 @@ format-ci: ## format the code (CI)
 
 .PHONY: lint-ci
 lint-ci: ## lint the code (CI)
+	@$(BIN)/publint
+	@$(BIN)/attw --pack .
 	@$(BIN)/eslint --max-warnings 0 .
 
 ##@ Release

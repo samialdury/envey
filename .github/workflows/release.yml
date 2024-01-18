@@ -84,7 +84,7 @@ jobs:
                   make build
 
             - name: Release to NPM & GitHub
-              timeout-minutes: 2
+              timeout-minutes: 10
               run: |
                   make release
               env:
