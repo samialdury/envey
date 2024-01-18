@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/samialdury/envey/compare/v2.2.1...v2.3.0) (2024-01-18)
+
+
+### Features
+
+* **ci:** add publint & attw ([0a11ad8](https://github.com/samialdury/envey/commit/0a11ad8bc0c57ce4113f1e78dae1c2dfb9e0d34c))
+
 ## [2.2.1](https://github.com/samialdury/envey/compare/v2.2.0...v2.2.1) (2023-10-17)
 
 
