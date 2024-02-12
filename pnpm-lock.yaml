@@ -6,14 +6,14 @@ settings:
 
 devDependencies:
   '@arethetypeswrong/cli':
-    specifier: 0.13.6
-    version: 0.13.6
+    specifier: 0.13.8
+    version: 0.13.8
   '@commitlint/cli':
     specifier: 18.4.4
     version: 18.4.4(@types/node@20.11.17)(typescript@5.3.3)
   '@samialdury/config':
     specifier: 6.2.0
-    version: 6.2.0(@commitlint/cli@18.4.4)(eslint@8.56.0)(lint-staged@15.2.1)(prettier@3.2.5)(semantic-release@22.0.12)(typescript@5.3.3)
+    version: 6.2.0(@commitlint/cli@18.4.4)(eslint@8.56.0)(lint-staged@15.2.2)(prettier@3.2.5)(semantic-release@22.0.12)(typescript@5.3.3)
   '@types/node':
     specifier: 20.11.17
     version: 20.11.17
@@ -27,8 +27,8 @@ devDependencies:
     specifier: 8.0.3
     version: 8.0.3
   lint-staged:
-    specifier: 15.2.1
-    version: 15.2.1
+    specifier: 15.2.2
+    version: 15.2.2
   prettier:
     specifier: 3.2.5
     version: 3.2.5
@@ -70,8 +70,8 @@ packages:
     resolution: {integrity: sha512-Jh15/qVmrLGhkKJBdXlK1+9tY4lZruYjsgkDFj08ZmDiWVBLJcqkok7Z0/R0In+i1rScBpJlSvrTS2Lm41Pbnw==}
     dev: true
 
-  /@arethetypeswrong/cli@0.13.6:
-    resolution: {integrity: sha512-rNiAcz/kLdqqfA3NvUjtLCPV933MEo+K5dMJDA7afdOPmH5iS13pCiZyeZ21MDBQrxMpx6t5G/7OyRf+OcsoPA==}
+  /@arethetypeswrong/cli@0.13.8:
+    resolution: {integrity: sha512-tQCXVBLuSfFlXdQLl17ZlBuHB1zo03H7uTLDFumoOl/dibXw1osYJ+Fd9Oju34buFDzI1DuFS2vba/Bsk95E5Q==}
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
@@ -876,7 +876,7 @@ packages:
     dev: true
     optional: true
 
-  /@samialdury/config@6.2.0(@commitlint/cli@18.4.4)(eslint@8.56.0)(lint-staged@15.2.1)(prettier@3.2.5)(semantic-release@22.0.12)(typescript@5.3.3):
+  /@samialdury/config@6.2.0(@commitlint/cli@18.4.4)(eslint@8.56.0)(lint-staged@15.2.2)(prettier@3.2.5)(semantic-release@22.0.12)(typescript@5.3.3):
     resolution: {integrity: sha512-cnIvoUelX439hl10C6Wv/+SAn6ram2Rznn9eS3lFwAhy6X+JUBbjhRcSTL88pKojFYb0fjZsEl5i7WWLIBmtJA==}
     peerDependencies:
       '@commitlint/cli': ^18.0.0
@@ -903,7 +903,7 @@ packages:
       eslint-plugin-react-hooks: 4.6.0(eslint@8.56.0)
       eslint-plugin-unicorn: 49.0.0(eslint@8.56.0)
       globals: 13.23.0
-      lint-staged: 15.2.1
+      lint-staged: 15.2.2
       prettier: 3.2.5
       prettier-plugin-autocorrect: 0.4.1(prettier@3.2.5)
       prettier-plugin-packagejson: 2.4.6(prettier@3.2.5)
@@ -3901,8 +3901,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
-  /lint-staged@15.2.1:
-    resolution: {integrity: sha512-dhwAPnM85VdshybV9FWI/9ghTvMLoQLEXgVMx+ua2DN7mdfzd/tRfoU2yhMcBac0RHkofoxdnnJUokr8s4zKmQ==}
+  /lint-staged@15.2.2:
+    resolution: {integrity: sha512-TiTt93OPh1OZOsb5B7k96A/ATl2AjIZo+vnzFZ6oHK5FuTk63ByDtxGQpHm+kFETjEWqgkF95M8FRXKR/LEBcw==}
     engines: {node: '>=18.12.0'}
     hasBin: true
     dependencies:
