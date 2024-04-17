@@ -18,7 +18,7 @@ pnpm i -E zod envey
 import { z } from 'zod'
 import { createConfig } from 'envey'
 
-const result = createConfig({
+const result = createConfig(
     z,
     {
         databaseUrl: {
@@ -31,7 +31,7 @@ const result = createConfig({
         },
     },
     { validate: true },
-})
+)
 
 if (!result.success) {
     console.error(result.error.issues)
