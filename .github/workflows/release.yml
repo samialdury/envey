@@ -94,3 +94,8 @@ jobs:
                   GIT_AUTHOR_EMAIL: ${{ secrets.BOT_EMAIL }}
                   GIT_COMMITTER_NAME: ${{ secrets.BOT_USERNAME }}
                   GIT_COMMITTER_EMAIL: ${{ secrets.BOT_EMAIL }}
+
+            - name: Release to JSR
+              timeout-minutes: 10
+              run: |
+                  pnpm dlx jsr publish
