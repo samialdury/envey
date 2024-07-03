@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
         inputs:
             acknowledge:
-                description: 'I understand that this action will publish a new NPM & GitHub release.'
+                description: 'I understand that this action will publish a new NPM, JSR & GitHub release.'
                 required: true
                 type: boolean
 
