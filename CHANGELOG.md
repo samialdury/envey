@@ -1,3 +1,20 @@
+# [2.4.0](https://github.com/samialdury/envey/compare/v2.3.0...v2.4.0) (2024-07-03)
+
+
+### Bug Fixes
+
+* **ci:** use pnpm 9 ([6466a0a](https://github.com/samialdury/envey/commit/6466a0a3ec95549c6ff3e2aa4daf2e9e8f793eb0))
+* **ci:** use pnpm 9 ([dd22e3c](https://github.com/samialdury/envey/commit/dd22e3c3f156e58a41fb3f49b684854aa50506cd))
+* **dependabot:** package ecosystem ([f6b4582](https://github.com/samialdury/envey/commit/f6b4582c92efc1b74fb17e488794d913ed390355))
+* **docs:** typo in README example parameters ([#143](https://github.com/samialdury/envey/issues/143)) ([db2f731](https://github.com/samialdury/envey/commit/db2f731ea8c396df48911b0640bd617aae177653))
+
+
+### Features
+
+* enable dependabot ([b494aa3](https://github.com/samialdury/envey/commit/b494aa32abd781116fd35b5be168735f0e862310))
+* pnpm 9 ([0567cf4](https://github.com/samialdury/envey/commit/0567cf42d158c9981635e00d1cac71ad07e0ffa6))
+* publish to JSR ([9b4d635](https://github.com/samialdury/envey/commit/9b4d635f725ab30d8c8b1f780c4bc1b280a2a5c6))
+
 # [2.3.0](https://github.com/samialdury/envey/compare/v2.2.1...v2.3.0) (2024-01-18)
 
 
