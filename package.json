@@ -51,7 +51,7 @@
         "@types/node": "20.14.7",
         "@vitest/coverage-v8": "1.5.3",
         "eslint": "8.57.0",
-        "husky": "8.0.3",
+        "husky": "9.1.6",
         "lint-staged": "15.2.7",
         "prettier": "3.3.2",
         "publint": "0.2.8",
