@@ -125,6 +125,7 @@ describe('Envey', () => {
                             expected: 'string',
                             message: 'Required',
                             path: ['someKey'],
+                            env: 'NON_PRESENT_ENV_VAR',
                             received: 'undefined',
                         },
                         {
@@ -133,6 +134,7 @@ describe('Envey', () => {
                                 "Invalid enum value. Expected '1' | '2', received '3'",
                             options: ['1', '2'],
                             path: ['someKey2'],
+                            env: 'INVALID_VAR',
                             received: '3',
                         },
                     ])

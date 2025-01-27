@@ -30,9 +30,11 @@ export function createConfig<
     const config: Record<string, any> = {}
     const values: Record<string, unknown> = {}
 
+    const envMap = new Map<string | number, string | undefined>()
+
     for (const key in schema) {
         const field = schema[key] as NonNullable<S[Extract<keyof S, string>]>
-
+        envMap.set(key, field.env)
         config[key] = field.format
         values[key] = field.env ? process.env[field.env] : undefined
     }
@@ -44,7 +46,10 @@ export function createConfig<
             // @ts-expect-error - This is fine
             return {
                 error: new EnveyValidationError(
-                    validationResult.error.issues,
+                    validationResult.error.issues.map((issue) => ({
+                        ...issue,
+                        env: envMap.get(issue.path.at(0)!),
+                    })),
                     `Invalid configuration`,
                 ),
                 success: false,
