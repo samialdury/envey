@@ -1,3 +1,15 @@
+# [2.5.0](https://github.com/samialdury/envey/compare/v2.4.0...v2.5.0) (2025-01-27)
+
+
+### Bug Fixes
+
+* lint error ([7e21d70](https://github.com/samialdury/envey/commit/7e21d700392348f096a138c69338252e99930605))
+
+
+### Features
+
+* populate `env` key in error ([71cbedf](https://github.com/samialdury/envey/commit/71cbedf7590ad1446a5e02c4b8290b9678bd75aa))
+
 # [2.4.0](https://github.com/samialdury/envey/compare/v2.3.0...v2.4.0) (2024-07-03)
 
 
