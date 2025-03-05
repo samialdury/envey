@@ -45,6 +45,7 @@
         "./src"
     ],
     "scripts": {
+        "build": "tsup",
         "build:ci": "pnpm run build",
         "format": "prettier --write .",
         "format:ci": "prettier --check .",
