@@ -5,7 +5,11 @@ export interface EnveyField<T> {
     format: ZodType<T>
 }
 
-export type EnveySchema = Record<string, EnveyField<unknown>>
+export interface EnveyNestedSchema {
+    [key: string]: EnveyField<unknown> | EnveyNestedSchema
+}
+
+export type EnveySchema = EnveyNestedSchema
 
 export interface EnveyOptions {
     /**
@@ -14,15 +18,21 @@ export interface EnveyOptions {
     validate?: boolean
 }
 
-export type EnveySchemaToConfig<S extends EnveySchema> = Readonly<{
-    [K in keyof S]: S[K]['format']['_type']
+// Helper type to handle nested objects
+type ExtractNestedConfig<S extends EnveyNestedSchema> = Readonly<{
+    [K in keyof S]: S[K] extends EnveyField<unknown>
+        ? S[K]['format']['_type'] extends undefined
+            ? Exclude<S[K]['format']['_type'], undefined>
+            : S[K]['format']['_type']
+        : S[K] extends EnveyNestedSchema
+          ? ExtractNestedConfig<S[K]>
+          : never
 }>
 
-export type InferEnveyConfig<S extends EnveySchema> = Readonly<{
-    [K in keyof S]: S[K]['format']['_type'] extends undefined
-        ? Exclude<S[K]['format']['_type'], undefined>
-        : S[K]['format']['_type']
-}>
+export type InferEnveyConfig<S extends EnveySchema> = ExtractNestedConfig<S>
+
+// Keeping this for backward compatibility
+export type EnveySchemaToConfig<S extends EnveySchema> = InferEnveyConfig<S>
 
 export interface SuccessResult<T> {
     config: T

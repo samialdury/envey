@@ -9,51 +9,100 @@ describe('Envey', () => {
             expect(typeof createConfig).toBe('function')
         })
 
-        it('Should return ENV value', () => {
-            const result = createConfig(
-                z,
-                {
-                    someEnum: {
-                        env: 'SOME_ENUM',
-                        format: z
-                            .enum(['value1', 'value2', 'value3'])
-                            .default('value2'),
-                    },
+        it('Should return default value if env is not present', () => {
+            const schema = {
+                someEnum: {
+                    env: 'SOME_ENUM',
+                    format: z
+                        .enum(['value1', 'value2', 'value3'])
+                        .default('value2'),
                 },
-                { validate: true },
-            )
+            } satisfies EnveySchema
+
+            const result = createConfig(z, schema, { validate: true })
+            type Config = InferEnveyConfig<typeof schema>
+            interface Expected {
+                readonly someEnum: 'value1' | 'value2' | 'value3'
+            }
 
             if (!result.success) {
                 expect.fail('Validation should have passed')
             }
 
+            expect(result.config).toStrictEqual({
+                someEnum: 'value2',
+            })
+            expect(result.config.someEnum).toBe('value2')
+
+            expectTypeOf<Config>().toEqualTypeOf<Expected>()
+            expectTypeOf(result.config.someEnum).toEqualTypeOf<
+                'value1' | 'value2' | 'value3'
+            >()
+        })
+
+        it('Should return env value if is present', () => {
+            vitest.stubEnv('SOME_ENUM', 'value1')
+            onTestFinished(() => {
+                vitest.unstubAllEnvs()
+            })
+
+            const schema = {
+                someEnum: {
+                    env: 'SOME_ENUM',
+                    format: z
+                        .enum(['value1', 'value2', 'value3'])
+                        .default('value2'),
+                },
+            } satisfies EnveySchema
+
+            const result = createConfig(z, schema, { validate: true })
+            type Config = InferEnveyConfig<typeof schema>
+            interface Expected {
+                readonly someEnum: 'value1' | 'value2' | 'value3'
+            }
+
+            if (!result.success) {
+                expect.fail('Validation should have passed')
+            }
+
+            expect(result.config).toStrictEqual({
+                someEnum: 'value1',
+            })
             expect(result.config.someEnum).toBe('value1')
+
+            expectTypeOf<Config>().toEqualTypeOf<Expected>()
             expectTypeOf(result.config.someEnum).toEqualTypeOf<
                 'value1' | 'value2' | 'value3'
             >()
         })
 
         it('Should return with possible undefined', () => {
-            const result = createConfig(
-                z,
-                {
-                    someEnum: {
-                        env: 'SOME_ENUM',
-                        format: z
-                            .enum(['value1', 'value2', 'value3'])
-                            .optional(),
-                    },
+            const schema = {
+                someEnum: {
+                    env: 'SOME_ENUM',
+                    format: z.enum(['value1', 'value2', 'value3']).optional(),
                 },
-                { validate: true },
-            )
+            } satisfies EnveySchema
+
+            const result = createConfig(z, schema, { validate: true })
 
             if (!result.success) {
                 expect.fail('Validation should have passed')
             }
 
-            expect(result.config.someEnum).toBe('value1')
+            type Config = InferEnveyConfig<typeof schema>
+            interface Expected {
+                readonly someEnum: 'value1' | 'value2' | 'value3' | undefined
+            }
+
+            expect(result.config).toStrictEqual({
+                someEnum: undefined,
+            })
+            expect(result.config.someEnum).toBeUndefined()
+
+            expectTypeOf<Config>().toEqualTypeOf<Expected>()
             expectTypeOf(result.config.someEnum).toEqualTypeOf<
-                'value1' | 'value2' | 'value3' | undefined
+                Expected['someEnum']
             >()
         })
 
@@ -76,110 +125,131 @@ describe('Envey', () => {
             expect(result.config.projectName).toBe('envey')
         })
 
-        describe('Validation', () => {
-            it('Should not throw error if validation is set to false', () => {
-                const result = createConfig(
-                    z,
-                    {
-                        someKey: {
-                            env: 'NON_PRESENT_ENV_VAR',
-                            format: z.string(),
-                        },
-                    },
-                    { validate: false },
-                )
-
-                expect(result.success).toBe(true)
-                expect(result.config.someKey).toBeUndefined()
+        it('Should support nested objects', () => {
+            vitest.stubEnv('SOME_ENUM', 'value1')
+            onTestFinished(() => {
+                vitest.unstubAllEnvs()
             })
 
-            it('Should throw error if validation is set to true', () => {
-                vitest.stubEnv('INVALID_VAR', '3')
-
-                const result = createConfig(
-                    z,
-                    {
-                        someKey: {
-                            env: 'NON_PRESENT_ENV_VAR',
-                            format: z.string(),
-                        },
-                        someKey2: {
-                            env: 'INVALID_VAR',
-                            format: z.enum(['1', '2']),
+            const schema = {
+                someEnum: {
+                    env: 'SOME_ENUM',
+                    format: z
+                        .enum(['value1', 'value2', 'value3'])
+                        .default('value2'),
+                },
+                nested: {
+                    someString: {
+                        env: 'NESTED_STRING',
+                        format: z.string().default('default value'),
+                    },
+                    deeplyNested: {
+                        someNumber: {
+                            env: 'DEEPLY_NESTED_NUMBER',
+                            format: z.number().default(42),
                         },
                     },
-                    { validate: true },
-                )
+                },
+            } satisfies EnveySchema
 
-                expect(result.success).toBe(false)
+            const result = createConfig(z, schema, { validate: true })
 
-                if (result.success) {
-                    expect.fail('Validation should have failed')
-                } else {
-                    expect(result.error).toBeInstanceOf(EnveyValidationError)
-                    expect(result.error.name).toBe('EnveyValidationError')
-                    expect(result.error.message).toBe('Invalid configuration')
-                    expect(result.error.issues).toEqual([
-                        {
-                            code: 'invalid_type',
-                            expected: 'string',
-                            message: 'Required',
-                            path: ['someKey'],
-                            env: 'NON_PRESENT_ENV_VAR',
-                            received: 'undefined',
-                        },
-                        {
-                            code: 'invalid_enum_value',
-                            message:
-                                "Invalid enum value. Expected '1' | '2', received '3'",
-                            options: ['1', '2'],
-                            path: ['someKey2'],
-                            env: 'INVALID_VAR',
-                            received: '3',
-                        },
-                    ])
+            if (!result.success) {
+                expect.fail('Validation should have passed')
+            }
+
+            expect(result.config.someEnum).toBe('value1')
+            expect(result.config.nested.someString).toBe('default value')
+            expect(result.config.nested.deeplyNested.someNumber).toBe(42)
+
+            // Type checking
+            type Config = InferEnveyConfig<typeof schema>
+            interface Expected {
+                readonly someEnum: 'value1' | 'value2' | 'value3'
+                readonly nested: {
+                    readonly someString: string
+                    readonly deeplyNested: {
+                        readonly someNumber: number
+                    }
                 }
-            })
+            }
+
+            expectTypeOf(result.config).toEqualTypeOf<Expected>()
+            expectTypeOf<Config>().toEqualTypeOf<Expected>()
         })
 
-        describe('Types', () => {
-            it('Should infer type of schema', () => {
-                const schema = {
-                    someEnum: {
-                        env: 'SOME_ENUM',
-                        format: z
-                            .enum(['value1', 'value2', 'value3'])
-                            .default('value2'),
+        it('Should not throw error if validation is disabled', () => {
+            const result = createConfig(
+                z,
+                {
+                    someKey: {
+                        env: 'NON_PRESENT_ENV_VAR',
+                        format: z.string(),
                     },
-                } satisfies EnveySchema
+                },
+                { validate: false },
+            )
 
-                let config: InferEnveyConfig<typeof schema>
+            expect(result.success).toBe(true)
+            expect(result.config.someKey).toBeUndefined()
 
-                // @ts-expect-error - just for testing
-                expectTypeOf(config).toEqualTypeOf<
-                    Readonly<{
-                        someEnum: 'value1' | 'value2' | 'value3'
-                    }>
-                >()
+            expectTypeOf(result.config.someKey).toEqualTypeOf<string>()
+            expectTypeOf(result.config).toEqualTypeOf<
+                Readonly<{
+                    someKey: string
+                }>
+            >()
+        })
+
+        it('Should throw error if validation is enabled', () => {
+            vitest.stubEnv('INVALID_VAR', '3')
+            onTestFinished(() => {
+                vitest.unstubAllEnvs()
             })
 
-            it('Should infer with optional with undefined', () => {
-                const schema = {
-                    someValue: {
-                        env: undefined,
-                        format: z.string().optional(),
+            const result = createConfig(
+                z,
+                {
+                    someKey: {
+                        env: 'NON_PRESENT_ENV_VAR',
+                        format: z.string(),
                     },
-                } satisfies EnveySchema
+                    someKey2: {
+                        env: 'INVALID_VAR',
+                        format: z.enum(['1', '2']),
+                    },
+                },
+                { validate: true },
+            )
 
-                let config: InferEnveyConfig<typeof schema>
+            expect(result.success).toBe(false)
 
-                // @ts-expect-error - just for testing
-                expectTypeOf(config).toEqualTypeOf<
-                    Readonly<{
-                        someValue: string | undefined
-                    }>
-                >()
-            })
+            if (result.success) {
+                expect.fail('Validation should have failed')
+            } else {
+                expect(result.error).toBeInstanceOf(EnveyValidationError)
+                expect(result.error.name).toBe('EnveyValidationError')
+                expect(result.error.message).toBe('Invalid configuration')
+                expect(result.error.issues).toEqual([
+                    {
+                        code: 'invalid_type',
+                        expected: 'string',
+                        message: 'Required',
+                        path: ['someKey'],
+                        env: 'NON_PRESENT_ENV_VAR',
+                        received: 'undefined',
+                    },
+                    {
+                        code: 'invalid_enum_value',
+                        message:
+                            "Invalid enum value. Expected '1' | '2', received '3'",
+                        options: ['1', '2'],
+                        path: ['someKey2'],
+                        env: 'INVALID_VAR',
+                        received: '3',
+                    },
+                ])
+            }
         })
     })
 })

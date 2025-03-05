@@ -1,6 +1,7 @@
 import type { z } from 'zod'
 import type {
     CreateConfigResult,
+    EnveyField,
     EnveyOptions,
     EnveySchema,
     InferEnveyConfig,
@@ -26,31 +27,21 @@ export function createConfig<
 ): CreateConfigResult<O, EnveyValidationError, InferEnveyConfig<S>> {
     const { validate } = options
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const config: Record<string, any> = {}
-    const values: Record<string, unknown> = {}
-
-    const envMap = new Map<number | string, string | undefined>()
-
-    for (const key in schema) {
-        const field = schema[key] as NonNullable<S[Extract<keyof S, string>]>
-        envMap.set(key, field.env)
-        config[key] = field.format
-        values[key] = field.env ? process.env[field.env] : undefined
-    }
+    // Process schema to build validation schema and collect env mappings
+    const { zodSchema, envMap, values } = processSchema(zodInstance, schema)
 
     if (validate) {
-        const validationResult = zodInstance.object(config).safeParse(values)
+        const validationResult = zodSchema.safeParse(values)
 
         if (!validationResult.success) {
             // @ts-expect-error - This is fine
             return {
                 error: new EnveyValidationError(
                     validationResult.error.issues.map((issue) => {
-                        const key = issue.path.at(0)
+                        const path = issue.path.join('.')
                         return {
                             ...issue,
-                            env: key ? envMap.get(key) : undefined,
+                            env: envMap.get(path),
                         }
                     }),
                     `Invalid configuration`,
@@ -68,5 +59,68 @@ export function createConfig<
     return {
         config: values as InferEnveyConfig<S>,
         success: true,
+    }
+}
+
+interface SchemaShape {
+    [key: string]: z.ZodTypeAny
+}
+
+interface ProcessSchemaResult {
+    zodSchema: z.ZodObject<SchemaShape>
+    envMap: Map<string, string | undefined>
+    values: Record<string, unknown>
+}
+
+/**
+ * Recursively processes the schema to build Zod validation schema and collect env mappings
+ */
+function processSchema(
+    zodInstance: typeof z,
+    schema: EnveySchema,
+    parentPath = '',
+): ProcessSchemaResult {
+    const zodSchemaShape: SchemaShape = {}
+    const values: Record<string, unknown> = {}
+    const envMap = new Map<string, string | undefined>()
+
+    for (const key in schema) {
+        const field = schema[key]
+        if (!field) continue
+
+        const currentPath = parentPath ? `${parentPath}.${key}` : key
+
+        // Check if this is a leaf node (EnveyField) or a nested object
+        if ('env' in field && 'format' in field) {
+            // This is an EnveyField
+            const typedField = field as EnveyField<unknown>
+            envMap.set(currentPath, typedField.env)
+            zodSchemaShape[key] = typedField.format
+            values[key] = typedField.env
+                ? process.env[typedField.env]
+                : undefined
+        } else {
+            // This is a nested object
+            const {
+                zodSchema,
+                envMap: nestedEnvMap,
+                values: nestedValues,
+            } = processSchema(zodInstance, field as EnveySchema, currentPath)
+
+            // Merge the nested env mappings into the current map
+            for (const [path, envVariable] of nestedEnvMap.entries()) {
+                envMap.set(path, envVariable)
+            }
+
+            // Extract the shape from the nested schema
+            zodSchemaShape[key] = zodSchema
+            values[key] = nestedValues
+        }
+    }
+
+    return {
+        zodSchema: zodInstance.object(zodSchemaShape),
+        envMap,
+        values,
     }
 }

@@ -1,11 +1,9 @@
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
+    cacheDir: '.cache/vitest',
     test: {
         include: ['./src/**/*.test.ts', './test/**/*.test.ts'],
-        env: {
-            SOME_ENUM: 'value1',
-        },
         globals: true,
         restoreMocks: true,
         unstubEnvs: true,
@@ -18,9 +16,6 @@ export default defineConfig({
             functions: 80,
             branches: 80,
             statements: 80,
-        },
-        cache: {
-            dir: '.cache/vitest',
         },
     },
 })
