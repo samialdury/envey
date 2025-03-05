@@ -84,5 +84,10 @@
     "publishConfig": {
         "access": "public",
         "provenance": true
+    },
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "esbuild"
+        ]
     }
 }
