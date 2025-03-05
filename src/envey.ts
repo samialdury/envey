@@ -62,9 +62,7 @@ export function createConfig<
     }
 }
 
-interface SchemaShape {
-    [key: string]: z.ZodTypeAny
-}
+type SchemaShape = Record<string, z.ZodTypeAny>
 
 interface ProcessSchemaResult {
     zodSchema: z.ZodObject<SchemaShape>
@@ -105,7 +103,7 @@ function processSchema(
                 zodSchema,
                 envMap: nestedEnvMap,
                 values: nestedValues,
-            } = processSchema(zodInstance, field as EnveySchema, currentPath)
+            } = processSchema(zodInstance, field, currentPath)
 
             // Merge the nested env mappings into the current map
             for (const [path, envVariable] of nestedEnvMap.entries()) {
