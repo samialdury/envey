@@ -53,27 +53,27 @@
         "publish": "tsup",
         "release": "semantic-release",
         "test": "vitest run",
-        "test:ci": "pnpm run test",
+        "test:ci": "pnpm run test:coverage",
         "test:coverage": "vitest run --coverage",
         "test:watch": "vitest watch",
         "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
-        "@arethetypeswrong/cli": "0.13.10",
+        "@arethetypeswrong/cli": "0.17.4",
         "@sebbo2002/semantic-release-jsr": "2.0.4",
         "@semantic-release/changelog": "6.0.3",
         "@semantic-release/git": "10.0.1",
         "@trivago/prettier-plugin-sort-imports": "5.2.2",
         "@types/node": "22.13.9",
         "@vitest/coverage-v8": "3.0.7",
-        "prettier": "3.3.2",
+        "prettier": "3.5.3",
         "prettier-plugin-packagejson": "2.5.10",
-        "publint": "0.2.8",
-        "semantic-release": "22.0.12",
-        "tsup": "8.0.2",
+        "publint": "0.3.8",
+        "semantic-release": "24.2.3",
+        "tsup": "8.4.0",
         "typescript": "5.8.2",
         "vitest": "3.0.7",
-        "zod": "3.24.1"
+        "zod": "3.24.2"
     },
     "peerDependencies": {
         "zod": "^3.0.0"
