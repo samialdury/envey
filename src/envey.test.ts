@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import type { EnveySchema, InferEnveyConfig } from './types.js'
 import { createConfig } from './envey.js'
 import { EnveyValidationError } from './errors.js'
+import type { EnveySchema, InferEnveyConfig } from './types.js'
 
 describe('Envey', () => {
     describe('createConfig', () => {

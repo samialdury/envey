@@ -1,4 +1,5 @@
 import type { z } from 'zod'
+import { EnveyValidationError } from './errors.js'
 import type {
     CreateConfigResult,
     EnveyField,
@@ -6,7 +7,6 @@ import type {
     EnveySchema,
     InferEnveyConfig,
 } from './types.js'
-import { EnveyValidationError } from './errors.js'
 
 /**
  * Constructs a config object from schema with optional validation.

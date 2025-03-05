@@ -12,8 +12,7 @@ concurrency: release-${{ github.ref_name }}
 
 env:
     TERM: xterm-256color
-    NODE_VERSION: 20
-    PNPM_VERSION: 9
+    NODE_VERSION: 22
 
 jobs:
     release:
@@ -45,10 +44,8 @@ jobs:
                   git_committer_email: ${{ secrets.BOT_EMAIL }}
 
             - name: Set up pnpm
-              uses: pnpm/action-setup@v2
+              uses: pnpm/action-setup@v4
               timeout-minutes: 2
-              with:
-                  version: ${{ env.PNPM_VERSION }}
 
             - name: Set up Node.js
               uses: actions/setup-node@v4
@@ -58,35 +55,20 @@ jobs:
                   cache: pnpm
                   cache-dependency-path: pnpm-lock.yaml
 
-            - name: Get pnpm store directory
-              id: pnpm-store
-              timeout-minutes: 2
-              run: |
-                  echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-            - name: Restore pnpm cache
-              uses: actions/cache@v4
-              timeout-minutes: 2
-              with:
-                  path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-                  key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-pnpm-${{ env.PNPM_VERSION }}-store-${{ hashFiles('pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ${{ runner.os }}-node-${{ env.NODE_VERSION }}-pnpm-${{ env.PNPM_VERSION }}-store-
-
             - name: Install npm dependencies
               timeout-minutes: 2
               run: |
-                  make install-ci
+                  pnpm install --frozen-lockfile
 
             - name: Bundle TypeScript
               timeout-minutes: 2
               run: |
-                  make build
+                  pnpm run build:ci
 
             - name: Release to NPM & GitHub
               timeout-minutes: 10
               run: |
-                  make release
+                  pnpm run release
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
                   GITHUB_TOKEN: ${{ secrets.BOT_PAT }}
