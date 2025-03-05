@@ -1,3 +1,20 @@
+# [2.6.0](https://github.com/samialdury/envey/compare/v2.5.0...v2.6.0) (2025-03-05)
+
+
+### Bug Fixes
+
+* **no-release:** fix build cmd ([e5b0a01](https://github.com/samialdury/envey/commit/e5b0a01bfc3f38b2e4269f2ec57c17abe55a981a))
+* **no-release:** remove wrong nodejs version from ci matrix ([56eaa84](https://github.com/samialdury/envey/commit/56eaa84db454b488f761dbfa65fa9fae188e1642))
+* **no-release:** update pnpm build dependencies ([e65b784](https://github.com/samialdury/envey/commit/e65b784a2efdc5a8ed6de4cb0313dbe01f373c8c))
+
+
+### Features
+
+* **no-release:** update dev & release configs/setup ([c45435e](https://github.com/samialdury/envey/commit/c45435e2246fba3e783d4b310d2fcf0ae8699766))
+* **no-release:** update packages ([e159de1](https://github.com/samialdury/envey/commit/e159de15aed07346bccc30e58d4d9b7eed62eecb))
+* **no-release:** update vitest ([a4238d6](https://github.com/samialdury/envey/commit/a4238d67ca84f1bd00367ad83efd0026c01d3548))
+* support nested schemas ([9ce5733](https://github.com/samialdury/envey/commit/9ce573363d8ab62ede28d63edfc4d3cd765895dc))
+
 # [2.5.0](https://github.com/samialdury/envey/compare/v2.4.0...v2.5.0) (2025-01-27)
 
 
