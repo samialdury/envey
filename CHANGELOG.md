@@ -1,3 +1,10 @@
+## [2.6.2](https://github.com/samialdury/envey/compare/v2.6.1...v2.6.2) (2025-03-06)
+
+
+### Bug Fixes
+
+* release config ([c068911](https://github.com/samialdury/envey/commit/c06891153fceeff13ba6d8bfd493c9073e8867c8))
+
 ## [2.6.1](https://github.com/samialdury/envey/compare/v2.6.0...v2.6.1) (2025-03-06)
 
 # [2.6.0](https://github.com/samialdury/envey/compare/v2.5.0...v2.6.0) (2025-03-05)
