@@ -7,55 +7,15 @@
         [
             "@semantic-release/commit-analyzer",
             {
-                "preset": "angular",
-                "releaseRules": [
-                    {
-                        "breaking": true,
-                        "release": "major"
-                    },
-                    {
-                        "revert": true,
-                        "release": "patch"
-                    },
-                    {
-                        "type": "feat",
-                        "release": "minor"
-                    },
-                    {
-                        "type": "fix",
-                        "release": "patch"
-                    },
-                    {
-                        "type": "perf",
-                        "release": "patch"
-                    },
-                    {
-                        "type": "docs",
-                        "scope": "README",
-                        "release": "patch"
-                    },
-                    {
-                        "type": "refactor",
-                        "release": "patch"
-                    },
-                    {
-                        "type": "style",
-                        "release": false
-                    },
-                    {
-                        "scope": "no-release",
-                        "release": false
-                    }
-                ],
-                "parserOpts": {
-                    "noteKeywords": [
-                        "BREAKING CHANGE",
-                        "BREAKING CHANGES"
-                    ]
-                }
+                "preset": "angular"
             }
         ],
-        "@semantic-release/release-notes-generator",
+        [
+            "@semantic-release/release-notes-generator",
+            {
+                "preset": "angular"
+            }
+        ],
         "@semantic-release/changelog",
         "@semantic-release/npm",
         "@sebbo2002/semantic-release-jsr",
