@@ -4,18 +4,8 @@
         "main"
     ],
     "plugins": [
-        [
-            "@semantic-release/commit-analyzer",
-            {
-                "preset": "angular"
-            }
-        ],
-        [
-            "@semantic-release/release-notes-generator",
-            {
-                "preset": "angular"
-            }
-        ],
+        "@semantic-release/commit-analyzer",
+        "@semantic-release/release-notes-generator",
         "@semantic-release/changelog",
         "@semantic-release/npm",
         "@sebbo2002/semantic-release-jsr",
@@ -27,7 +17,7 @@
                     "jsr.json",
                     "CHANGELOG.md"
                 ],
-                "message": "chore(release): v${nextRelease.version}"
+                "message": "chore(release): v${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
             }
         ],
         "@semantic-release/github"
