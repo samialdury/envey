@@ -4,12 +4,13 @@
 [![license](https://img.shields.io/github/license/samialdury/envey)](LICENSE)
 [![npm version](https://img.shields.io/npm/v/envey)](https://www.npmjs.com/package/envey)
 
-Envey is a library designed to simplify the process of managing and validating environment variables in Node.js applications. It provides a fully type-safe solution for defining and parsing configuration schemas, leveraging the power of [Zod](https://zod.dev/)'s excellent type system.
+Envey is a library designed to simplify the process of managing and validating environment variables in Node.js applications. It provides a fully type-safe solution for defining and parsing configuration schemas, leveraging the power of [Zod](https://zod.dev/)'s excellent type system and validation features.
 
-**Now supports also nested objects**, see [here](#nested-objects).
+As of v2.6.0, it also **supports nested objects**. See [here](#nested-objects) for more details.
 
-> [!NOTE]
-> Inspired by [convict](https://github.com/mozilla/node-convict).
+## Why
+
+I was looking for something like [convict](https://github.com/mozilla/node-convict), but with the type safety and validation features of [Zod](https://zod.dev/). Hence, I decided to create this library.
 
 ## Installation
 

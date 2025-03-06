@@ -10,18 +10,49 @@
                 "preset": "angular",
                 "releaseRules": [
                     {
-                        "release": false,
-                        "scope": "no-release"
+                        "breaking": true,
+                        "release": "major"
                     },
                     {
-                        "release": "patch",
-                        "type": "refactor"
+                        "revert": true,
+                        "release": "patch"
                     },
                     {
-                        "release": "patch",
-                        "type": "style"
+                        "type": "feat",
+                        "release": "minor"
+                    },
+                    {
+                        "type": "fix",
+                        "release": "patch"
+                    },
+                    {
+                        "type": "perf",
+                        "release": "patch"
+                    },
+                    {
+                        "type": "docs",
+                        "scope": "README",
+                        "release": "patch"
+                    },
+                    {
+                        "type": "refactor",
+                        "release": "patch"
+                    },
+                    {
+                        "type": "style",
+                        "release": false
+                    },
+                    {
+                        "scope": "no-release",
+                        "release": false
                     }
-                ]
+                ],
+                "parserOpts": {
+                    "noteKeywords": [
+                        "BREAKING CHANGE",
+                        "BREAKING CHANGES"
+                    ]
+                }
             }
         ],
         "@semantic-release/release-notes-generator",
