@@ -27,7 +27,6 @@ import { z } from 'zod/v4'
 import { createConfig } from 'envey'
 
 const result = createConfig(
-    z,
     {
         databaseUrl: {
             env: 'DATABASE_URL',
@@ -101,23 +100,23 @@ const schema = {
 } satisfies EnveySchema
 
 // Default behavior - uses process.env (Node.js)
-const config1 = createConfig(z, schema, { validate: true })
+const config1 = createConfig(schema, { validate: true })
 
 // Custom environment object
 const customEnv = {
     API_KEY: 'custom-api-key',
     PORT: '8080',
 }
-const config2 = createConfig(z, schema, { validate: true }, customEnv)
+const config2 = createConfig(schema, { validate: true }, customEnv)
 
 // Works in Cloudflare Workers (no process.env)
-const config3 = createConfig(z, schema, { validate: true }, {
+const config3 = createConfig(schema, { validate: true }, {
     API_KEY: env.API_KEY, // Cloudflare Workers env binding
     PORT: '3000',
 })
 
 // Testing with mock data
-const config4 = createConfig(z, schema, { validate: true }, {
+const config4 = createConfig(schema, { validate: true }, {
     API_KEY: 'test-key',
     // PORT not provided - will use default value
 })
@@ -136,7 +135,6 @@ import { z } from 'zod/v4'
 import { createConfig } from 'envey'
 
 const result = createConfig(
-    z,
     {
         postgres: {
             host: {

@@ -19,7 +19,7 @@ describe('Envey', () => {
                 },
             } satisfies EnveySchema
 
-            const result = createConfig(z, schema, { validate: true })
+            const result = createConfig(schema, { validate: true })
             type Config = InferEnveyConfig<typeof schema>
             interface Expected {
                 readonly someEnum: 'value1' | 'value2' | 'value3'
@@ -55,7 +55,7 @@ describe('Envey', () => {
                 },
             } satisfies EnveySchema
 
-            const result = createConfig(z, schema, { validate: true })
+            const result = createConfig(schema, { validate: true })
             type Config = InferEnveyConfig<typeof schema>
             interface Expected {
                 readonly someEnum: 'value1' | 'value2' | 'value3'
@@ -84,7 +84,7 @@ describe('Envey', () => {
                 },
             } satisfies EnveySchema
 
-            const result = createConfig(z, schema, { validate: true })
+            const result = createConfig(schema, { validate: true })
 
             if (!result.success) {
                 expect.fail('Validation should have passed')
@@ -108,7 +108,6 @@ describe('Envey', () => {
 
         it('Should leave value as undefined', () => {
             const result = createConfig(
-                z,
                 {
                     projectName: {
                         env: undefined,
@@ -152,7 +151,7 @@ describe('Envey', () => {
                 },
             } satisfies EnveySchema
 
-            const result = createConfig(z, schema, { validate: true })
+            const result = createConfig(schema, { validate: true })
 
             if (!result.success) {
                 expect.fail('Validation should have passed')
@@ -180,7 +179,6 @@ describe('Envey', () => {
 
         it('Should not throw error if validation is disabled', () => {
             const result = createConfig(
-                z,
                 {
                     someKey: {
                         env: 'NON_PRESENT_ENV_VAR',
@@ -208,7 +206,6 @@ describe('Envey', () => {
             })
 
             const result = createConfig(
-                z,
                 {
                     someKey: {
                         env: 'NON_PRESENT_ENV_VAR',
@@ -275,7 +272,6 @@ describe('Envey', () => {
                 } satisfies EnveySchema
 
                 const result = createConfig(
-                    z,
                     schema,
                     { validate: true },
                     customEnv,
@@ -317,7 +313,6 @@ describe('Envey', () => {
                 } satisfies EnveySchema
 
                 const result = createConfig(
-                    z,
                     schema,
                     { validate: true },
                     customEnv,
@@ -350,7 +345,6 @@ describe('Envey', () => {
                 } satisfies EnveySchema
 
                 const result = createConfig(
-                    z,
                     schema,
                     { validate: true },
                     customEnv,
@@ -400,7 +394,6 @@ describe('Envey', () => {
                 } satisfies EnveySchema
 
                 const result = createConfig(
-                    z,
                     schema,
                     { validate: false },
                     customEnv,
@@ -422,7 +415,6 @@ describe('Envey', () => {
                 } satisfies EnveySchema
 
                 const result = createConfig(
-                    z,
                     schema,
                     { validate: true },
                     customEnv,
@@ -454,7 +446,6 @@ describe('Envey', () => {
                 } satisfies EnveySchema
 
                 const result = createConfig(
-                    z,
                     schema,
                     { validate: true },
                     customEnv,
@@ -495,7 +486,6 @@ describe('Envey', () => {
 
                 // Should not throw even without process.env available
                 const result = createConfig(
-                    z,
                     schema,
                     { validate: true },
                     customEnv,
@@ -527,7 +517,7 @@ describe('Envey', () => {
                 } satisfies EnveySchema
 
                 // Call without providing env parameter - should use empty object as default
-                const result = createConfig(z, schema, { validate: true })
+                const result = createConfig(schema, { validate: true })
 
                 if (!result.success) {
                     expect.fail('Validation should have passed')

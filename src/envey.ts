@@ -1,4 +1,4 @@
-import type { z } from 'zod/v4'
+import { z } from 'zod/v4'
 import { EnveyValidationError } from './errors.js'
 import type {
     CreateConfigResult,
@@ -11,8 +11,6 @@ import type {
 /**
  * Constructs a config object from schema with optional validation.
  *
- * `zodInstance` - {@link https://www.npmjs.com/package/zod | Zod} instance to use.
- *
  * `schema` - See {@link EnveySchema}.
  *
  * `options` - See {@link EnveyOptions}.
@@ -23,7 +21,6 @@ export function createConfig<
     S extends EnveySchema,
     O extends EnveyOptions = EnveyOptions,
 >(
-    zodInstance: typeof z,
     schema: S,
     options: O,
     env: Record<string, string | undefined> = typeof process !== 'undefined'
@@ -33,18 +30,13 @@ export function createConfig<
     const { validate } = options
 
     // Process schema to build validation schema and collect env mappings
-    const { zodSchema, envMap, values } = processSchema(
-        zodInstance,
-        schema,
-        '',
-        env,
-    )
+    const { zodSchema, envMap, values } = processSchema(schema, '', env)
 
     if (validate) {
         const validationResult = zodSchema.safeParse(values)
 
         if (!validationResult.success) {
-            // @ts-expect-error - This is fine
+            // @ts-expect-error - Complex conditional type inference
             return {
                 error: new EnveyValidationError(
                     validationResult.error.issues.map((issue) => {
@@ -84,7 +76,6 @@ interface ProcessSchemaResult {
  * Recursively processes the schema to build Zod validation schema and collect env mappings
  */
 function processSchema(
-    zodInstance: typeof z,
     schema: EnveySchema,
     parentPath = '',
     env: Record<string, string | undefined> = typeof process !== 'undefined'
@@ -114,7 +105,7 @@ function processSchema(
                 zodSchema,
                 envMap: nestedEnvMap,
                 values: nestedValues,
-            } = processSchema(zodInstance, field, currentPath, env)
+            } = processSchema(field, currentPath, env)
 
             // Merge the nested env mappings into the current map
             for (const [path, envVariable] of Array.from(
@@ -130,7 +121,7 @@ function processSchema(
     }
 
     return {
-        zodSchema: zodInstance.object(zodSchemaShape),
+        zodSchema: z.object(zodSchemaShape),
         envMap,
         values,
     }
