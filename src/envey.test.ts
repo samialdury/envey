@@ -249,5 +249,292 @@ describe('Envey', () => {
                 ])
             }
         })
+
+        describe('custom env parameter', () => {
+            it('Should use custom env object instead of process.env', () => {
+                const customEnv = {
+                    CUSTOM_ENUM: 'value3',
+                    CUSTOM_STRING: 'custom value',
+                }
+
+                const schema = {
+                    someEnum: {
+                        env: 'CUSTOM_ENUM',
+                        format: z
+                            .enum(['value1', 'value2', 'value3'])
+                            .default('value1'),
+                    },
+                    someString: {
+                        env: 'CUSTOM_STRING',
+                        format: z.string().default('default'),
+                    },
+                    notInCustomEnv: {
+                        env: 'NOT_IN_CUSTOM_ENV',
+                        format: z.string().default('fallback'),
+                    },
+                } satisfies EnveySchema
+
+                const result = createConfig(
+                    z,
+                    schema,
+                    { validate: true },
+                    customEnv,
+                )
+
+                if (!result.success) {
+                    expect.fail('Validation should have passed')
+                }
+
+                expect(result.config.someEnum).toBe('value3')
+                expect(result.config.someString).toBe('custom value')
+                expect(result.config.notInCustomEnv).toBe('fallback')
+            })
+
+            it('Should work with nested objects using custom env', () => {
+                const customEnv = {
+                    TOP_LEVEL: 'top',
+                    NESTED_VALUE: 'nested',
+                    DEEP_NUMBER: '999',
+                }
+
+                const schema = {
+                    topLevel: {
+                        env: 'TOP_LEVEL',
+                        format: z.string(),
+                    },
+                    nested: {
+                        value: {
+                            env: 'NESTED_VALUE',
+                            format: z.string(),
+                        },
+                        deeper: {
+                            number: {
+                                env: 'DEEP_NUMBER',
+                                format: z.coerce.number(),
+                            },
+                        },
+                    },
+                } satisfies EnveySchema
+
+                const result = createConfig(
+                    z,
+                    schema,
+                    { validate: true },
+                    customEnv,
+                )
+
+                if (!result.success) {
+                    expect.fail('Validation should have passed')
+                }
+
+                expect(result.config.topLevel).toBe('top')
+                expect(result.config.nested.value).toBe('nested')
+                expect(result.config.nested.deeper.number).toBe(999)
+            })
+
+            it('Should validate against custom env and return errors with env mapping', () => {
+                const customEnv = {
+                    INVALID_ENUM: 'invalid_value',
+                    // MISSING_REQUIRED is intentionally not provided
+                }
+
+                const schema = {
+                    invalidEnum: {
+                        env: 'INVALID_ENUM',
+                        format: z.enum(['valid1', 'valid2']),
+                    },
+                    missingRequired: {
+                        env: 'MISSING_REQUIRED',
+                        format: z.string(),
+                    },
+                } satisfies EnveySchema
+
+                const result = createConfig(
+                    z,
+                    schema,
+                    { validate: true },
+                    customEnv,
+                )
+
+                expect(result.success).toBe(false)
+
+                if (result.success) {
+                    expect.fail('Validation should have failed')
+                } else {
+                    expect(result.error).toBeInstanceOf(EnveyValidationError)
+                    expect(result.error.issues).toEqual([
+                        {
+                            code: 'invalid_value',
+                            message:
+                                'Invalid option: expected one of "valid1"|"valid2"',
+                            values: ['valid1', 'valid2'],
+                            path: ['invalidEnum'],
+                            env: 'INVALID_ENUM',
+                        },
+                        {
+                            code: 'invalid_type',
+                            expected: 'string',
+                            message:
+                                'Invalid input: expected string, received undefined',
+                            path: ['missingRequired'],
+                            env: 'MISSING_REQUIRED',
+                        },
+                    ])
+                }
+            })
+
+            it('Should work without validation using custom env', () => {
+                const customEnv = {
+                    SOME_VAR: 'custom_value',
+                }
+
+                const schema = {
+                    someVar: {
+                        env: 'SOME_VAR',
+                        format: z.string(),
+                    },
+                    missingVar: {
+                        env: 'MISSING_VAR',
+                        format: z.string(),
+                    },
+                } satisfies EnveySchema
+
+                const result = createConfig(
+                    z,
+                    schema,
+                    { validate: false },
+                    customEnv,
+                )
+
+                expect(result.success).toBe(true)
+                expect(result.config.someVar).toBe('custom_value')
+                expect(result.config.missingVar).toBeUndefined()
+            })
+
+            it('Should work with empty custom env object', () => {
+                const customEnv = {}
+
+                const schema = {
+                    someVar: {
+                        env: 'SOME_VAR',
+                        format: z.string().default('default_value'),
+                    },
+                } satisfies EnveySchema
+
+                const result = createConfig(
+                    z,
+                    schema,
+                    { validate: true },
+                    customEnv,
+                )
+
+                if (!result.success) {
+                    expect.fail('Validation should have passed')
+                }
+
+                expect(result.config.someVar).toBe('default_value')
+            })
+
+            it('Should ignore process.env when custom env is provided', () => {
+                // Set up process.env value
+                vitest.stubEnv('CONFLICT_VAR', 'process_env_value')
+                onTestFinished(() => {
+                    vitest.unstubAllEnvs()
+                })
+
+                const customEnv = {
+                    CONFLICT_VAR: 'custom_env_value',
+                }
+
+                const schema = {
+                    conflictVar: {
+                        env: 'CONFLICT_VAR',
+                        format: z.string(),
+                    },
+                } satisfies EnveySchema
+
+                const result = createConfig(
+                    z,
+                    schema,
+                    { validate: true },
+                    customEnv,
+                )
+
+                if (!result.success) {
+                    expect.fail('Validation should have passed')
+                }
+
+                // Should use custom env, not process.env
+                expect(result.config.conflictVar).toBe('custom_env_value')
+            })
+
+            it('Should work in environments without process.env (like Cloudflare Workers)', () => {
+                // Temporarily hide process to simulate non-Node environment
+                const originalProcess = globalThis.process
+                // @ts-expect-error - Intentionally deleting for test
+                delete globalThis.process
+
+                onTestFinished(() => {
+                    globalThis.process = originalProcess
+                })
+
+                const customEnv = {
+                    WORKER_VAR: 'worker_value',
+                }
+
+                const schema = {
+                    workerVar: {
+                        env: 'WORKER_VAR',
+                        format: z.string(),
+                    },
+                    missingVar: {
+                        env: 'MISSING_VAR',
+                        format: z.string().default('default_value'),
+                    },
+                } satisfies EnveySchema
+
+                // Should not throw even without process.env available
+                const result = createConfig(
+                    z,
+                    schema,
+                    { validate: true },
+                    customEnv,
+                )
+
+                if (!result.success) {
+                    expect.fail('Validation should have passed')
+                }
+
+                expect(result.config.workerVar).toBe('worker_value')
+                expect(result.config.missingVar).toBe('default_value')
+            })
+
+            it('Should default to empty object when process is undefined and no env provided', () => {
+                // Temporarily hide process to simulate non-Node environment
+                const originalProcess = globalThis.process
+                // @ts-expect-error - Intentionally deleting for test
+                delete globalThis.process
+
+                onTestFinished(() => {
+                    globalThis.process = originalProcess
+                })
+
+                const schema = {
+                    someVar: {
+                        env: 'SOME_VAR',
+                        format: z.string().default('fallback'),
+                    },
+                } satisfies EnveySchema
+
+                // Call without providing env parameter - should use empty object as default
+                const result = createConfig(z, schema, { validate: true })
+
+                if (!result.success) {
+                    expect.fail('Validation should have passed')
+                }
+
+                expect(result.config.someVar).toBe('fallback')
+            })
+        })
     })
 })

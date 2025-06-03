@@ -16,6 +16,8 @@ import type {
  * `schema` - See {@link EnveySchema}.
  *
  * `options` - See {@link EnveyOptions}.
+ *
+ * `env` - Environment variables object. Defaults to `process.env`.
  */
 export function createConfig<
     S extends EnveySchema,
@@ -24,11 +26,19 @@ export function createConfig<
     zodInstance: typeof z,
     schema: S,
     options: O,
+    env: Record<string, string | undefined> = typeof process !== 'undefined'
+        ? process.env
+        : {},
 ): CreateConfigResult<O, EnveyValidationError, InferEnveyConfig<S>> {
     const { validate } = options
 
     // Process schema to build validation schema and collect env mappings
-    const { zodSchema, envMap, values } = processSchema(zodInstance, schema)
+    const { zodSchema, envMap, values } = processSchema(
+        zodInstance,
+        schema,
+        '',
+        env,
+    )
 
     if (validate) {
         const validationResult = zodSchema.safeParse(values)
@@ -77,6 +87,9 @@ function processSchema(
     zodInstance: typeof z,
     schema: EnveySchema,
     parentPath = '',
+    env: Record<string, string | undefined> = typeof process !== 'undefined'
+        ? process.env
+        : {},
 ): ProcessSchemaResult {
     const zodSchemaShape: SchemaShape = {}
     const values: Record<string, unknown> = {}
@@ -94,16 +107,14 @@ function processSchema(
             const typedField = field as EnveyField<unknown>
             envMap.set(currentPath, typedField.env)
             zodSchemaShape[key] = typedField.format
-            values[key] = typedField.env
-                ? process.env[typedField.env]
-                : undefined
+            values[key] = typedField.env ? env[typedField.env] : undefined
         } else {
             // This is a nested object
             const {
                 zodSchema,
                 envMap: nestedEnvMap,
                 values: nestedValues,
-            } = processSchema(zodInstance, field, currentPath)
+            } = processSchema(zodInstance, field, currentPath, env)
 
             // Merge the nested env mappings into the current map
             for (const [path, envVariable] of Array.from(
