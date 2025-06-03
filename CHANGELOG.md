@@ -1,3 +1,30 @@
+# [3.0.0](https://github.com/samialdury/envey/compare/v2.6.3...v3.0.0) (2025-06-03)
+
+
+* feat!: remove helpers ([76184fe](https://github.com/samialdury/envey/commit/76184fe16425fa2f5c5c25c8e8a26034845ccd9e))
+* feat!: simplify API by removing `zodInstance` parameter ([ae55c61](https://github.com/samialdury/envey/commit/ae55c615c7aebcef48eab43fb0dd3645b572ffe4))
+* feat!: upgrade to zod v4 ([19dab96](https://github.com/samialdury/envey/commit/19dab960467f4f00aeaf8262a5f2c0712b923855))
+
+
+### Features
+
+* custom `env` parameter to improve compatiblity across runtimes ([a74211f](https://github.com/samialdury/envey/commit/a74211ff7933a1d694f5633e21536c19af8deffc))
+
+
+### BREAKING CHANGES
+
+* createConfig() no longer accepts zodInstance as first parameter.
+
+Migration guide:
+- Before: createConfig(z, schema, options)
+- After: createConfig(schema, options)
+* upgrade peer dependeny `zod` to `^3.25.0`. Refer to
+[Zod migration guide](https://zod.dev/v4/changelog) for more info
+.
+* Helpers are removed. Specifically the `bool` helper,
+which you can replace by Zod v4's
+[strinbool](https://zod.dev/v4?id=stringbool).
+
 ## [2.6.3](https://github.com/samialdury/envey/compare/v2.6.2...v2.6.3) (2025-03-06)
 
 
