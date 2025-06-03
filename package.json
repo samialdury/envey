@@ -73,10 +73,10 @@
         "tsup": "8.4.0",
         "typescript": "5.8.2",
         "vitest": "3.0.7",
-        "zod": "3.24.2"
+        "zod": "3.25.49"
     },
     "peerDependencies": {
-        "zod": "^3.0.0"
+        "zod": "^3.25.0"
     },
     "packageManager": "pnpm@10.2.1+sha512.398035c7bd696d0ba0b10a688ed558285329d27ea994804a52bad9167d8e3a72bcb993f9699585d3ca25779ac64949ef422757a6c31102c12ab932e5cbe5cc92",
     "engines": {

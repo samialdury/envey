@@ -21,7 +21,7 @@ pnpm i -E zod envey
 ## Usage
 
 ```ts
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { createConfig } from 'envey'
 
 const result = createConfig(
@@ -78,7 +78,7 @@ type Config = InferEnveyConfig<typeof schema>
 ### Nested objects
 
 ```ts
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { createConfig } from 'envey'
 
 const result = createConfig(

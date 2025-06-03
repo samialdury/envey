@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { createConfig } from './envey.js'
 import { EnveyValidationError } from './errors.js'
 import type { EnveySchema, InferEnveyConfig } from './types.js'
@@ -234,19 +234,17 @@ describe('Envey', () => {
                     {
                         code: 'invalid_type',
                         expected: 'string',
-                        message: 'Required',
+                        message:
+                            'Invalid input: expected string, received undefined',
                         path: ['someKey'],
                         env: 'NON_PRESENT_ENV_VAR',
-                        received: 'undefined',
                     },
                     {
-                        code: 'invalid_enum_value',
-                        message:
-                            "Invalid enum value. Expected '1' | '2', received '3'",
-                        options: ['1', '2'],
+                        code: 'invalid_value',
+                        message: 'Invalid option: expected one of "1"|"2"',
+                        values: ['1', '2'],
                         path: ['someKey2'],
                         env: 'INVALID_VAR',
-                        received: '3',
                     },
                 ])
             }

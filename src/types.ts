@@ -1,4 +1,4 @@
-import type { ZodType } from 'zod'
+import type { ZodType } from 'zod/v4'
 
 export interface EnveyField<T> {
     env: string | undefined
@@ -20,10 +20,8 @@ export interface EnveyOptions {
 
 // Helper type to handle nested objects
 type ExtractNestedConfig<S extends EnveyNestedSchema> = Readonly<{
-    [K in keyof S]: S[K] extends EnveyField<unknown>
-        ? S[K]['format']['_type'] extends undefined
-            ? Exclude<S[K]['format']['_type'], undefined>
-            : S[K]['format']['_type']
+    [K in keyof S]: S[K] extends EnveyField<infer T>
+        ? T
         : S[K] extends EnveyNestedSchema
           ? ExtractNestedConfig<S[K]>
           : never

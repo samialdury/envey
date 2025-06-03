@@ -1,4 +1,4 @@
-import type { z } from 'zod'
+import type { z } from 'zod/v4'
 import { EnveyValidationError } from './errors.js'
 import type {
     CreateConfigResult,
@@ -62,7 +62,7 @@ export function createConfig<
     }
 }
 
-type SchemaShape = Record<string, z.ZodTypeAny>
+type SchemaShape = Record<string, z.ZodType>
 
 interface ProcessSchemaResult {
     zodSchema: z.ZodObject<SchemaShape>
@@ -106,7 +106,9 @@ function processSchema(
             } = processSchema(zodInstance, field, currentPath)
 
             // Merge the nested env mappings into the current map
-            for (const [path, envVariable] of nestedEnvMap.entries()) {
+            for (const [path, envVariable] of Array.from(
+                nestedEnvMap.entries(),
+            )) {
                 envMap.set(path, envVariable)
             }
 
