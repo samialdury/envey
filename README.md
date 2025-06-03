@@ -4,7 +4,9 @@
 [![license](https://img.shields.io/github/license/samialdury/envey)](LICENSE)
 [![npm version](https://img.shields.io/npm/v/envey)](https://www.npmjs.com/package/envey)
 
-Envey is a library designed to simplify the process of managing and validating environment variables in Node.js applications. It provides a fully type-safe solution for defining and parsing configuration schemas, leveraging the power of [Zod](https://zod.dev/)'s excellent type system and validation features.
+Envey is a library designed to simplify the process of managing and validating environment variables in JavaScript applications. It provides a fully type-safe solution for defining and parsing configuration schemas, leveraging the power of [Zod](https://zod.dev/)'s excellent type system and validation features.
+
+**Works everywhere:** Node.js, Cloudflare Workers, browsers, React Native, and any JavaScript runtime.
 
 As of v2.6.0, it also **supports nested objects**. See [here](#nested-objects) for more details.
 
@@ -74,6 +76,58 @@ type Config = InferEnveyConfig<typeof schema>
 //          readonly logLevel:  "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent"
 //      }
 ```
+
+### Custom environment variables
+
+By default, `createConfig` reads environment variables from `process.env`. However, you can provide a custom environment object as the fourth parameter. This is particularly useful for:
+
+- **Non-Node.js environments** (Cloudflare Workers, browsers, React Native)
+- **Testing** with mock environment variables
+- **Multi-tenant applications** with different configurations
+
+```ts
+import { z } from 'zod/v4'
+import { createConfig } from 'envey'
+
+const schema = {
+    apiKey: {
+        env: 'API_KEY',
+        format: z.string(),
+    },
+    port: {
+        env: 'PORT',
+        format: z.coerce.number().default(3000),
+    },
+} satisfies EnveySchema
+
+// Default behavior - uses process.env (Node.js)
+const config1 = createConfig(z, schema, { validate: true })
+
+// Custom environment object
+const customEnv = {
+    API_KEY: 'custom-api-key',
+    PORT: '8080',
+}
+const config2 = createConfig(z, schema, { validate: true }, customEnv)
+
+// Works in Cloudflare Workers (no process.env)
+const config3 = createConfig(z, schema, { validate: true }, {
+    API_KEY: env.API_KEY, // Cloudflare Workers env binding
+    PORT: '3000',
+})
+
+// Testing with mock data
+const config4 = createConfig(z, schema, { validate: true }, {
+    API_KEY: 'test-key',
+    // PORT not provided - will use default value
+})
+```
+
+**Environment compatibility:**
+- **Node.js**: Automatically uses `process.env` when available
+- **Cloudflare Workers**: Provide custom env object (no `process.env` available)
+- **Browsers/React Native**: Provide custom env object or empty object for defaults
+- **Testing**: Mock environment variables without affecting `process.env`
 
 ### Nested objects
 
