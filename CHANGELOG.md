@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/samialdury/envey/compare/v3.0.0...v3.0.1) (2025-06-04)
+
+
+### Bug Fixes
+
+* **docs:** update readme ([cfbfb7d](https://github.com/samialdury/envey/commit/cfbfb7d6f4d1694f27745c74c337f8a91e499eac))
+
 # [3.0.0](https://github.com/samialdury/envey/compare/v2.6.3...v3.0.0) (2025-06-03)
 
 
