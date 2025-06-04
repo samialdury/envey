@@ -8,7 +8,7 @@ Envey is a library designed to simplify the process of managing and validating e
 
 **Works everywhere:** Node.js, Cloudflare Workers, browsers, React Native, and any JavaScript runtime.
 
-As of v2.6.0, it also **supports nested objects**. See [here](#nested-objects) for more details.
+As of v2.6.0, it also **supports nested objects**. See [nested objects](#nested-objects) for more details.
 
 ## Why
 
@@ -78,7 +78,7 @@ type Config = InferEnveyConfig<typeof schema>
 
 ### Custom environment variables
 
-By default, `createConfig` reads environment variables from `process.env`. However, you can provide a custom environment object as the fourth parameter. This is particularly useful for:
+By default, `createConfig` reads environment variables from `process.env`. However, you can provide a custom environment object as the third parameter. This is particularly useful for:
 
 - **Non-Node.js environments** (Cloudflare Workers, browsers, React Native)
 - **Testing** with mock environment variables
@@ -123,6 +123,7 @@ const config4 = createConfig(schema, { validate: true }, {
 ```
 
 **Environment compatibility:**
+
 - **Node.js**: Automatically uses `process.env` when available
 - **Cloudflare Workers**: Provide custom env object (no `process.env` available)
 - **Browsers/React Native**: Provide custom env object or empty object for defaults
