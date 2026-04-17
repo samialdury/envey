@@ -271,11 +271,7 @@ describe('Envey', () => {
                 },
             } satisfies EnveySchema
 
-            const result = createConfig(
-                schema,
-                { validate: true },
-                customEnv,
-            )
+            const result = createConfig(schema, { validate: true }, customEnv)
 
             expect(result.success).toBe(false)
             if (result.success) {
