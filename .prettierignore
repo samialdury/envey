@@ -6,5 +6,5 @@ build
 dist
 coverage
 
-pnpm-lock.yaml
+bun.lock
 *.md

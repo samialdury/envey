@@ -12,7 +12,7 @@ concurrency: release-${{ github.ref_name }}
 
 env:
     TERM: xterm-256color
-    NODE_VERSION: 22
+    NODE_VERSION: 24
 
 jobs:
     release:
@@ -26,7 +26,7 @@ jobs:
             id-token: write # to enable use of OIDC for npm provenance
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
               timeout-minutes: 2
               with:
                   token: ${{ secrets.BOT_PAT }}
@@ -43,32 +43,29 @@ jobs:
                   git_committer_name: ${{ secrets.BOT_USERNAME }}
                   git_committer_email: ${{ secrets.BOT_EMAIL }}
 
-            - name: Set up pnpm
-              uses: pnpm/action-setup@v4
+            - uses: oven-sh/setup-bun@v2
               timeout-minutes: 2
 
             - name: Set up Node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v6
               timeout-minutes: 2
               with:
                   node-version: ${{ env.NODE_VERSION }}
-                  cache: pnpm
-                  cache-dependency-path: pnpm-lock.yaml
 
             - name: Install npm dependencies
               timeout-minutes: 2
               run: |
-                  pnpm install --frozen-lockfile
+                  bun install --frozen-lockfile
 
             - name: Bundle TypeScript
               timeout-minutes: 2
               run: |
-                  pnpm run build:ci
+                  bun run build:ci
 
             - name: Release to NPM & GitHub
               timeout-minutes: 10
               run: |
-                  pnpm run release
+                  bun run release
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
                   GITHUB_TOKEN: ${{ secrets.BOT_PAT }}
@@ -80,4 +77,4 @@ jobs:
             - name: Release to JSR
               timeout-minutes: 10
               run: |
-                  pnpm dlx jsr publish
+                  bunx jsr publish

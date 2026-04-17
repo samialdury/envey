@@ -27,49 +27,46 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                node-version: [22, 23]
+                node-version: [22, 23, 24, 25, 26]
         steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+            - uses: actions/checkout@v6
               timeout-minutes: 2
 
-            - name: Set up pnpm
-              uses: pnpm/action-setup@v4
+            - uses: oven-sh/setup-bun@v2
               timeout-minutes: 2
 
             - name: Set up Node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v6
               timeout-minutes: 2
               with:
                   node-version: ${{ matrix.node-version }}
-                  cache: pnpm
 
             - name: Install npm dependencies
               timeout-minutes: 2
               run: |
-                  pnpm install --frozen-lockfile
+                  bun install --frozen-lockfile
 
             - name: Check TypeScript
               timeout-minutes: 2
               run: |
-                  pnpm run typecheck
+                  bun run typecheck
 
             - name: Bundle TypeScript
               timeout-minutes: 2
               run: |
-                  pnpm run build:ci
+                  bun run build:ci
 
             - name: Run tests
               timeout-minutes: 2
               run: |
-                  pnpm run test:ci
+                  bun run test:ci
 
             - name: Check formatting
               timeout-minutes: 2
               run: |
-                  pnpm run format:ci
+                  bun run format:ci
 
             - name: Check lint errors
               timeout-minutes: 2
               run: |
-                  pnpm run lint:ci
+                  bun run lint:ci

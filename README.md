@@ -17,6 +17,10 @@ I was looking for something like [convict](https://github.com/mozilla/node-convi
 ## Installation
 
 ```sh
+# bun
+bun i -E zod envey
+
+# pnpm
 pnpm i -E zod envey
 ```
 

@@ -5,8 +5,8 @@
         "**/node_modules": true,
         "**/dist": true,
         "**/coverage": true,
-        "**/pnpm-lock.yaml": true,
+        "**/bun.lock": true,
         "**/.eslintcache": true
     },
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "js/ts.tsdk.path": "node_modules/typescript/lib"
 }

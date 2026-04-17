@@ -46,14 +46,14 @@
     ],
     "scripts": {
         "build": "tsup",
-        "build:ci": "pnpm run build",
+        "build:ci": "bun run build",
         "format": "prettier --write .",
         "format:ci": "prettier --check .",
         "lint:ci": "publint && attw --pack .",
         "publish": "tsup",
         "release": "semantic-release",
         "test": "vitest run",
-        "test:ci": "pnpm run test:coverage",
+        "test:ci": "bun run test:coverage",
         "test:coverage": "vitest run --coverage",
         "test:watch": "vitest watch",
         "typecheck": "tsc --noEmit"
@@ -84,10 +84,5 @@
     "publishConfig": {
         "access": "public",
         "provenance": true
-    },
-    "pnpm": {
-        "onlyBuiltDependencies": [
-            "esbuild"
-        ]
     }
 }
