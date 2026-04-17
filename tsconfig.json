@@ -34,7 +34,7 @@
         "rootDir": "src",
         "outDir": "dist",
         // Extra types
-        "types": ["vitest/globals"]
+        "types": ["node", "vitest/globals"]
     },
     "include": ["src", "test"]
 }
