@@ -16,7 +16,7 @@ export class EnveyValidationError extends Error {
      *
      * @see {@link https://github.com/colinhacks/zod/blob/c7805073fef5b6b8857307c3d4b3597a70613bc2/packages/zod/src/v4/core/errors.ts#L435}
      */
-    prettify() {
+    prettify(): string {
         const lines: string[] = []
         // sort by path length
         const issues = [...this.issues].sort(
