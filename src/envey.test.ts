@@ -247,6 +247,97 @@ describe('Envey', () => {
             }
         })
 
+        it('Should populate env on issues from nested schema paths', () => {
+            const customEnv = {
+                NESTED_NUM: 'not-a-number',
+            }
+
+            const schema = {
+                topStr: {
+                    env: 'TOP_STR',
+                    format: z.string(),
+                },
+                nested: {
+                    num: {
+                        env: 'NESTED_NUM',
+                        format: z.coerce.number(),
+                    },
+                    deeper: {
+                        kind: {
+                            env: 'DEEP_ENUM',
+                            format: z.enum(['a', 'b']),
+                        },
+                    },
+                },
+            } satisfies EnveySchema
+
+            const result = createConfig(
+                schema,
+                { validate: true },
+                customEnv,
+            )
+
+            expect(result.success).toBe(false)
+            if (result.success) {
+                expect.fail('Validation should have failed')
+            }
+
+            const byPath = new Map(
+                result.error.issues.map((i) => [i.path.join('.'), i.env]),
+            )
+            expect(byPath.get('topStr')).toBe('TOP_STR')
+            expect(byPath.get('nested.num')).toBe('NESTED_NUM')
+            expect(byPath.get('nested.deeper.kind')).toBe('DEEP_ENUM')
+        })
+
+        it('Should return env: undefined on issue when field has no env binding', () => {
+            const schema = {
+                noEnvField: {
+                    env: undefined,
+                    format: z.string(),
+                },
+            } satisfies EnveySchema
+
+            const result = createConfig(schema, { validate: true }, {})
+
+            expect(result.success).toBe(false)
+            if (result.success) {
+                expect.fail('Validation should have failed')
+            }
+
+            expect(result.error.issues).toHaveLength(1)
+            expect(result.error.issues[0]?.env).toBeUndefined()
+            expect(result.error.issues[0]?.path).toEqual(['noEnvField'])
+        })
+
+        it('Should handle mixed nested fields with and without env bindings', () => {
+            const schema = {
+                nested: {
+                    bound: {
+                        env: 'BOUND_VAR',
+                        format: z.string(),
+                    },
+                    unbound: {
+                        env: undefined,
+                        format: z.string(),
+                    },
+                },
+            } satisfies EnveySchema
+
+            const result = createConfig(schema, { validate: true }, {})
+
+            expect(result.success).toBe(false)
+            if (result.success) {
+                expect.fail('Validation should have failed')
+            }
+
+            const byPath = new Map(
+                result.error.issues.map((i) => [i.path.join('.'), i.env]),
+            )
+            expect(byPath.get('nested.bound')).toBe('BOUND_VAR')
+            expect(byPath.get('nested.unbound')).toBeUndefined()
+        })
+
         describe('custom env parameter', () => {
             it('Should use custom env object instead of process.env', () => {
                 const customEnv = {
