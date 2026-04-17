@@ -1,4 +1,4 @@
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { createConfig } from './envey.js'
 import { EnveyValidationError } from './errors.js'
 import type { EnveySchema, InferEnveyConfig } from './types.js'

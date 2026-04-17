@@ -1,4 +1,4 @@
-import type { z } from 'zod/v4'
+import type { z } from 'zod'
 
 export class EnveyValidationError extends Error {
     public issues: z.core.$ZodIssue[]

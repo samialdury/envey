@@ -23,7 +23,7 @@ pnpm i -E zod envey
 ## Usage
 
 ```ts
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { createConfig } from 'envey'
 
 const result = createConfig(
@@ -85,7 +85,7 @@ By default, `createConfig` reads environment variables from `process.env`. Howev
 - **Multi-tenant applications** with different configurations
 
 ```ts
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { createConfig } from 'envey'
 
 const schema = {
@@ -132,7 +132,7 @@ const config4 = createConfig(schema, { validate: true }, {
 ### Nested objects
 
 ```ts
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { createConfig } from 'envey'
 
 const result = createConfig(
