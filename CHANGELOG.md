@@ -1,3 +1,22 @@
+# [4.0.0](https://github.com/samialdury/envey/compare/v3.0.1...v4.0.0) (2026-04-17)
+
+
+* feat!: upgrade to zod v4 ([056e252](https://github.com/samialdury/envey/commit/056e2526966e6872099170121cd723a82d98c3ab))
+
+
+### Features
+
+* add `EnveyValidationError.prettify()` ([0523cbb](https://github.com/samialdury/envey/commit/0523cbb7347d5a887f50f5c8a70fe770e1f9ba03))
+* extend zod issue with `env` property in Error ([88cb6ff](https://github.com/samialdury/envey/commit/88cb6ff1d2a84709a98e4c682639263a4842ab4d))
+* update dependencies ([a4e3a6b](https://github.com/samialdury/envey/commit/a4e3a6b67fafdaa94f22e5e7ebdef0ef22922230))
+
+
+### BREAKING CHANGES
+
+* upgrade peer dependeny `zod` to `^4.0.0`. Refer to [Zod
+migration guide](https://zod.dev/v4/changelog) for more info
+.
+
 ## [3.0.1](https://github.com/samialdury/envey/compare/v3.0.0...v3.0.1) (2025-06-04)
 
 

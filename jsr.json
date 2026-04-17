@@ -1,6 +1,6 @@
 {
     "name": "@sami/envey",
-    "version": "3.0.1",
+    "version": "4.0.0",
     "exports": "./src/index.ts",
     "publish": {
         "include": ["package.json", "src/**/*.ts", "README.md", "LICENSE"],
